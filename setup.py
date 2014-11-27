@@ -5,7 +5,7 @@ setup(
     name='pdftools',
     version='1.0.0',
     packages=[''],
-    scripts=['pdfsplit.py'],
+    scripts=['pdfsplit.py', 'pdfmerge.py'],
     url='',
     license='GPL',
     author='Stefan Lehmann',
