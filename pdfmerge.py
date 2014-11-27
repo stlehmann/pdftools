@@ -6,49 +6,54 @@ import argparse
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
-def pdf_merge(input1, input2, output):
-    inputfile1 = open(input1, "rb")
-    inputfile2 = open(input2, "rb")
-    output = output or input1
-
+def pdf_merge(inputs, output):
     writer = PdfFileWriter()
-    reader1 = PdfFileReader(inputfile1)
-    for page in reader1.pages:
-        writer.addPage(page)
-
-    reader2 = PdfFileReader(inputfile2)
-    for page in reader2.pages:
-        writer.addPage(page)
+    if os.path.isfile(output):
+        ans = input("The file '%s' already exists. "
+                    "Overwrite? Yes/Abort [Y/a]: " % output).lower()
+        if ans == "a":
+            return
 
     outputfile = open(output, "wb")
-    writer.write(outputfile)
-    inputfile1.close()
-    inputfile2.close()
-    outputfile.close()
+
+    try:
+        infiles = []
+        for filename in inputs:
+            f = open(filename, 'rb')
+            reader = PdfFileReader(f)
+            for page in reader.pages:
+                writer.addPage(page)
+            infiles.append(f)
+        writer.write(outputfile)
+    except FileNotFoundError as e:
+        print(e.strerror + ": " + e.filename)
+    finally:
+        outputfile.close()
+        for f in infiles:
+            f.close()
 
 
 def process_arguments(args):
-    parser = argparse.ArgumentParser(description="Merge the pages of two PDF files.")
+    parser = argparse.ArgumentParser(
+        description="Merge the pages of multiple input files in one output file.")
     #input
-    parser.add_argument('input1',
+    parser.add_argument('inputs',
                         type=str,
                         default=None,
-                        help='input file 1')
-    #output
-    parser.add_argument('input2',
-                        type=str,
-                        default=None,
-                        help='input file 2')
+                        nargs='+',
+                        help='list of input files')
+
     #output
     parser.add_argument('-o',
                         '--output',
                         type=str,
                         default=None,
-                        help='filename of the output file')
+                        help='filename of the output file',
+                        required=True)
 
     return parser.parse_args(args)
 
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    pdf_merge(args.input1, args.input2, args.output)
+    pdf_merge(args.inputs, args.output)
