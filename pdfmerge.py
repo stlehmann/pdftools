@@ -6,7 +6,7 @@ import argparse
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
-def pdf_merge(inputs, output):
+def pdf_merge(inputs, output, delete=False):
     writer = PdfFileWriter()
     if os.path.isfile(output):
         ans = input("The file '%s' already exists. "
@@ -32,6 +32,10 @@ def pdf_merge(inputs, output):
         for f in infiles:
             f.close()
 
+    if delete:
+        for filename in inputs:
+            os.remove(filename)
+
 
 def process_arguments(args):
     parser = argparse.ArgumentParser(
@@ -51,9 +55,16 @@ def process_arguments(args):
                         help='filename of the output file',
                         required=True)
 
+    #delete
+    parser.add_argument('-d',
+                        '--delete',
+                        action='store_true',
+                        help='delete input files after merge')
+
     return parser.parse_args(args)
 
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    pdf_merge(args.inputs, args.output)
+    print(args)
+    #pdf_merge(args.inputs, args.output, args.delete)
