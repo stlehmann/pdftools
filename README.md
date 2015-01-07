@@ -63,3 +63,22 @@ optional arguments:
   -h, --help  show this help message and exit
   -c          rotate pages counterclockwise
 ```
+
+## pdfzip
+Zip the pages of two input files in one output file. This when dealing with
+scanned documents where even pages are in one docuemnt and odd pages in the 
+other.
+
+usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
+
+Zip the pages of two documents in one output file.
+
+positional arguments:
+input1                first inputfile
+input2                second inputfile
+
+optional arguments:
+-h, --help            show this help message and exit
+-o OUTPUT, --output OUTPUT
+filename of the output file
+-d, --delete          delete input files after merge
