@@ -1,7 +1,11 @@
 pdftools
 ========
+* **Version** 1.0.1
+* **Copyright (c)** 2015 Stefan Lehmann
+* **License:** MIT
+* **Description:*** This is a small collection of convenience python scripts for fast pdf manipulation via commandline.
 
-small collection of python scripts for pdf manipulation
+
 
 ## Features
 
@@ -11,7 +15,11 @@ small collection of python scripts for pdf manipulation
 
 ## Usage
 
-### pdfsplit
+*pdftools* adds some scripts to your existing Python installation that
+can be called via the commandline. The description for each script is
+listed below.
+
+### pdfsplit.py
 With *pdfsplit* one PDF file can be split in multiple documents. The new documents are named according to the *-o* argument. The page number and the file ending *pdf* are added to the name automatically.
 
 ```bash
@@ -31,7 +39,7 @@ optional arguments:
                         defines how many pages are packed in one file
 ```
 
-### pdfmerge
+### pdfmerge.py
 This tool merges multiple input files to one output file. The page order is according to the order of the input files.
 
 ```bash
@@ -49,7 +57,7 @@ optional arguments:
   -d, --delete          delete input files after merge
 ```
 
-### pdfrotate
+### pdfrotate.py
 Rotate the pages of one or multiple input files clockwise or counterclockwise. The source file will be overwritten.
 ```bash
 usage: pdfrotate.py [-h] [-c] inputs [inputs ...]
@@ -66,9 +74,10 @@ optional arguments:
 
 ## pdfzip
 Zip the pages of two input files in one output file. This when dealing with
-scanned documents where even pages are in one docuemnt and odd pages in the 
+scanned documents where even pages are in one docuemnt and odd pages in the
 other.
 
+```bash
 usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
 
 Zip the pages of two documents in one output file.
@@ -82,3 +91,4 @@ optional arguments:
 -o OUTPUT, --output OUTPUT
 filename of the output file
 -d, --delete          delete input files after merge
+```
