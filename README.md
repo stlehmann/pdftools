@@ -5,13 +5,12 @@ pdftools
 * **License:** MIT
 * **Description:*** This is a small collection of convenience python scripts for fast pdf manipulation via commandline.
 
-
-
 ## Features
 
 * split PDF files in multiple documents
 * merge PDF files into one document
 * rotate PDF files
+* zip PDF files in one document
 
 ## Usage
 
@@ -73,9 +72,9 @@ optional arguments:
 ```
 
 ## pdfzip
-Zip the pages of two input files in one output file. This when dealing with
-scanned documents where even pages are in one docuemnt and odd pages in the
-other.
+Zip the pages of two input files in one output file. This is useful when
+dealing with scanned documents where even pages are in one docuemnt and
+odd pages in the other.
 
 ```bash
 usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
