@@ -3,7 +3,7 @@ pdftools
 * **Version** 1.0.1
 * **Copyright (c)** 2015 Stefan Lehmann
 * **License:** MIT
-* **Description:*** This is a small collection of convenience python scripts for fast pdf manipulation via commandline.
+* **Description:** This is a small collection of convenience python scripts for fast pdf manipulation via commandline.
 
 ## Features
 
@@ -71,7 +71,7 @@ optional arguments:
   -c          rotate pages counterclockwise
 ```
 
-## pdfzip
+## pdfzip.py
 Zip the pages of two input files in one output file. This is useful when
 dealing with scanned documents where even pages are in one docuemnt and
 odd pages in the other.

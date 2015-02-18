@@ -56,7 +56,7 @@ def pdf_rotate(inputs, counter_clockwise=False):
             move(tempfile.name, filename)
 
 
-def pdf_split(input, output, stepsize=1):
+def pdf_split(input, output, stepsize=1, sequence=None):
     output = output or os.path.splitext(input)[0]
     if not os.path.isfile(input):
         print("Error. The file '%s' does not exist." % input)
@@ -65,30 +65,43 @@ def pdf_split(input, output, stepsize=1):
         reader = PdfFileReader(inputfile)
         pagenr = 0
         outputfile = None
-        for i, page in enumerate(reader.pages):
-            if not i % stepsize:
-                pagenr += 1
-                outputfile = open(output + "_%i.pdf" % pagenr, "wb")
-                writer = PdfFileWriter()
-            writer.addPage(page)
-            if not (i + 1) % stepsize:
-                writer.write(outputfile)
-                outputfile.close()
+        if sequence is None:
+            for i, page in enumerate(reader.pages):
+                if not i % stepsize:
+                    pagenr += 1
+                    outputfile = open(output + "_%i.pdf" % pagenr, "wb")
+                    writer = PdfFileWriter()
+                writer.addPage(page)
+                if not (i + 1) % stepsize:
+                    writer.write(outputfile)
+                    outputfile.close()
+        else:
+            sequence = map(int, sequence)
+            iter_pages = iter(reader.pages)
+            for filenr, pagecount in enumerate(sequence):
+                with open(output + "_%i.pdf" % (filenr + 1), "wb") as outputfile:
+                    writer = PdfFileWriter()
+                    for i in range(pagecount):
+                        try:
+                            page = next(iter_pages)
+                            writer.addPage(page)
+                        except StopIteration:
+                            writer.write(outputfile)
+                            return
+                    writer.write(outputfile)
+
         if not outputfile.closed:
             writer.write(outputfile)
             outputfile.close()
 
 
 def pdf_zip(input1, input2, output, delete=False):
-    writer = PdfFileWriter()
     if os.path.isfile(output):
         ans = input("The file '%s' already exists. "
                     "Overwrite? Yes/Abort [Y/a]: " % output).lower()
         if ans == "a":
             return
-
     outputfile = open(output, "wb")
-
     try:
         f1, f2 = open(input1, 'rb'), open(input2, 'rb')
         r1, r2 = PdfFileReader(f1), PdfFileReader(f2)

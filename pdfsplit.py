@@ -24,11 +24,20 @@ def process_arguments(args):
                         dest='stepsize',
                         type=int,
                         default=1,
-                        help='defines how many pages are packed in one file')
+                        help='defines how many pages are packed in each output '
+                             ' file')
+    #sequence
+    parser.add_argument('-q',
+                        '--sequence',
+                        dest='sequence',
+                        nargs='+',
+                        help='sequence of numbers describing how many pages to '
+                             'put in each outputfile')
 
     return parser.parse_args(args)
 
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    pdf_split(args.input, args.output, args.stepsize)
+    print(args)
+    pdf_split(args.input, args.output, args.stepsize, args.sequence)
