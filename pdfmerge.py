@@ -66,5 +66,4 @@ def process_arguments(args):
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    print(args)
-    #pdf_merge(args.inputs, args.output, args.delete)
+    pdf_merge(args.inputs, args.output, args.delete)
