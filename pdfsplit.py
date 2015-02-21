@@ -1,32 +1,9 @@
 #! python3
 
-import os
 import sys
 import argparse
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from pdftools import pdf_split
 
-
-def split_pdf(input, output, stepsize=1):
-    output = output or os.path.splitext(input)[0]
-    if not os.path.isfile(input):
-        print("Error. The file '%s' does not exist." % input)
-        return
-    with open(input, "rb") as inputfile:
-        reader = PdfFileReader(inputfile)
-        pagenr = 0
-        outputfile = None
-        for i, page in enumerate(reader.pages):
-            if not i % stepsize:
-                pagenr += 1
-                outputfile = open(output + "_%i.pdf" % pagenr, "wb")
-                writer = PdfFileWriter()
-            writer.addPage(page)
-            if not (i + 1) % stepsize:
-                writer.write(outputfile)
-                outputfile.close()
-        if not outputfile.closed:
-            writer.write(outputfile)
-            outputfile.close()
 
 def process_arguments(args):
     parser = argparse.ArgumentParser(description="Split a PDF file in multiple documents.")
@@ -47,11 +24,20 @@ def process_arguments(args):
                         dest='stepsize',
                         type=int,
                         default=1,
-                        help='defines how many pages are packed in one file')
+                        help='defines how many pages are packed in each output '
+                             ' file')
+    #sequence
+    parser.add_argument('-q',
+                        '--sequence',
+                        dest='sequence',
+                        nargs='+',
+                        help='sequence of numbers describing how many pages to '
+                             'put in each outputfile')
 
     return parser.parse_args(args)
 
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    split_pdf(args.input, args.output, args.stepsize)
+    print(args)
+    pdf_split(args.input, args.output, args.stepsize, args.sequence)
