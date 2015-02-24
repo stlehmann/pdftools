@@ -5,16 +5,21 @@ from shutil import move
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
-def pdf_merge(inputs, output, delete=False):
+def pdf_merge(inputs: [str], output: str, delete: bool=False):
+    """
+    Merge multiple Pdf input files in one output file.
+    :param inputs: input files
+    :param output: output file
+    :param delete: delete input files after completion if true
+
+    """
     writer = PdfFileWriter()
     if os.path.isfile(output):
         ans = input("The file '%s' already exists. "
                     "Overwrite? Yes/Abort [Y/a]: " % output).lower()
         if ans == "a":
             return
-
     outputfile = open(output, "wb")
-
     try:
         infiles = []
         for filename in inputs:
@@ -30,13 +35,18 @@ def pdf_merge(inputs, output, delete=False):
         outputfile.close()
         for f in infiles:
             f.close()
-
     if delete:
         for filename in inputs:
             os.remove(filename)
 
 
-def pdf_rotate(inputs, counter_clockwise=False):
+def pdf_rotate(inputs: [str], counter_clockwise: bool=False):
+    """
+    Rotate the given Pdf files clockwise or counter clockwise.
+    :param inputs: pdf files
+    :param counter_clockwise: rotate counter clockwise if true else clockwise
+
+    """
     for input_name in inputs:
         filenames = glob(input_name)
         for filename in filenames:
@@ -56,7 +66,15 @@ def pdf_rotate(inputs, counter_clockwise=False):
             move(tempfile.name, filename)
 
 
-def pdf_split(input, output, stepsize=1, sequence=None):
+def pdf_split(input: str, output: str, stepsize: int=1, sequence: [int]=None):
+    """
+    Split the input file in multiple output files
+    :param input: name of the input file
+    :param output: name of the output files
+    :param stepsize: how many pages per file, only if sequence is None
+    :param sequence: list with number of pages per file
+
+    """
     output = output or os.path.splitext(input)[0]
     if not os.path.isfile(input):
         print("Error. The file '%s' does not exist." % input)
@@ -95,7 +113,16 @@ def pdf_split(input, output, stepsize=1, sequence=None):
             outputfile.close()
 
 
-def pdf_zip(input1, input2, output, delete=False):
+def pdf_zip(input1: str, input2: str, output: str, delete: bool=False):
+    """
+    Zip pages of input1 and input2 in one output file. Useful for putting
+    even and odd pages together in one document.
+    :param input1: first input file
+    :param input2: second input file
+    :param output: output file
+    :param delete: if true the input files will be deleted after zipping
+
+    """
     if os.path.isfile(output):
         ans = input("The file '%s' already exists. "
                     "Overwrite? Yes/Abort [Y/a]: " % output).lower()
@@ -122,3 +149,7 @@ def pdf_zip(input1, input2, output, delete=False):
     if delete:
         os.remove(input1)
         os.remove(input2)
+
+
+def pdf_insert(input1: str, input2: str, output: str=None):
+    pass
