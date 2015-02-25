@@ -15,6 +15,13 @@ parentparser.add_argument(
 )
 
 
+def overwrite_dlg(filename):
+    ans = input("Overwrite file '%s'? Yes/No [Y/n]: " % filename).lower()
+    if ans in ['y', '']:
+        return True
+    return False
+
+
 def pdf_merge(inputs: [str], output: str, delete: bool=False):
     """
     Merge multiple Pdf input files in one output file.
@@ -50,30 +57,56 @@ def pdf_merge(inputs: [str], output: str, delete: bool=False):
             os.remove(filename)
 
 
-def pdf_rotate(inputs: [str], counter_clockwise: bool=False):
+def pdf_rotate(input: str, counter_clockwise: bool=False, pages: [int]=None,
+               output: str=None):
     """
     Rotate the given Pdf files clockwise or counter clockwise.
     :param inputs: pdf files
     :param counter_clockwise: rotate counter clockwise if true else clockwise
-
+    :param pages: list of page indices to rotate, if None all pages will be
+        rotated
     """
-    for input_name in inputs:
-        filenames = glob(input_name)
-        for filename in filenames:
-            with open(filename, 'rb') as f:
-                writer = PdfFileWriter()
-                tempfile = NamedTemporaryFile(delete=False)
-                reader = PdfFileReader(f)
-                for page in reader.pages:
-                    if counter_clockwise:
-                        writer.addPage(page.rotateCounterClockwise(90))
-                    else:
-                        writer.addPage(page.rotateClockwise(90))
-                writer.write(tempfile)
-            f.close()
-            tempfile.close()
-            os.remove(filename)
-            move(tempfile.name, filename)
+    infile = open(input, 'rb')
+    reader = PdfFileReader(infile)
+    writer = PdfFileWriter()
+
+    # get pages from source depending on pages parameter
+    if pages is None:
+        source_pages = reader.pages
+    else:
+        source_pages = [reader.getPage(i) for i in pages]
+
+    # rotate pages and add to writer
+    for i, page in enumerate(reader.pages):
+        if pages is None or i in pages:
+            if counter_clockwise:
+                writer.addPage(page.rotateCounterClockwise(90))
+            else:
+                writer.addPage(page.rotateClockwise(90))
+        else:
+            writer.addPage(page)
+
+    # Open output file or temporary file for writing
+    if output is None:
+        outfile = NamedTemporaryFile(delete=False)
+    else:
+        if not os.path.isfile(output) or overwrite_dlg(output):
+            outfile = open(output, 'wb')
+        else:
+            return
+
+    # Write to file
+    writer.write(outfile)
+    infile.close()
+    outfile.close()
+
+    # If no output defined move temporary file to input
+    if outfile is None:
+        if overwrite_dlg(input):
+            os.remove(input)
+            move(outfile.name, input)
+        else:
+            os.remove(outfile.name)
 
 
 def pdf_split(input: str, output: str, stepsize: int=1, sequence: [int]=None):

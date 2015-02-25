@@ -29,22 +29,27 @@ With *pdfsplit* one PDF file can be split in multiple documents. The new
 documents are named according to the *-o* argument. The page number and
 the file ending *pdf* are added to the name automatically.
 
-.. code:: bash
+::
 
-    usage: pdfsplit.py [-h] [-o OUTPUT] [-s STEPSIZE] input
+    usage: pdfsplit.py [-h] [--version] [-o OUTPUT] [-s STEPSIZE]
+                       [-q SEQUENCE [SEQUENCE ...]]
+                       input
 
     Split a PDF file in multiple documents.
-
 
     positional arguments:
       input                 input file that shall be splitted
 
     optional arguments:
       -h, --help            show this help message and exit
+      --version             show program's version number and exit
       -o OUTPUT, --output OUTPUT
                             filename of the output files
       -s STEPSIZE, --stepsize STEPSIZE
-                            defines how many pages are packed in one file
+                            defines how many pages are packed in each output file
+      -q SEQUENCE [SEQUENCE ...], --sequence SEQUENCE [SEQUENCE ...]
+                            sequence of numbers describing how many pages to put
+                            in each outputfile
 
 pdfmerge.py
 ~~~~~~~~~~~
@@ -52,7 +57,7 @@ pdfmerge.py
 This tool merges multiple input files to one output file. The page order
 is according to the order of the input files.
 
-.. code:: bash
+::
 
     usage: pdfmerge.py [-h] -o OUTPUT [-d] inputs [inputs ...]
 
@@ -73,7 +78,7 @@ pdfrotate.py
 Rotate the pages of one or multiple input files clockwise or
 counterclockwise. The source file will be overwritten.
 
-.. code:: bash
+::
 
     usage: pdfrotate.py [-h] [-c] inputs [inputs ...]
 
@@ -87,13 +92,13 @@ counterclockwise. The source file will be overwritten.
       -c          rotate pages counterclockwise
 
 pdfzip.py
----------
+~~~~~~~~~
 
 Zip the pages of two input files in one output file. This is useful when
 dealing with scanned documents where even pages are in one docuemnt and
 odd pages in the other.
 
-.. code:: bash
+::
 
     usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
 
@@ -110,11 +115,11 @@ odd pages in the other.
     -d, --delete          delete input files after merge
 
 pdfinsert.py
-------------
+~~~~~~~~~~~~
 
 Insert pages from one source file into a destination file.
 
-.. code:: bash
+::
 
     usage: pdfinsert.py [-h] [--version] [-o OUTPUT] [-p PAGES [PAGES ...]]
                         [-i INDEX]

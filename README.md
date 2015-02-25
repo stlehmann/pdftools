@@ -7,6 +7,7 @@ pdftools
 
 ## Features
 
+* insert pages
 * split PDF files in multiple documents
 * merge PDF files into one document
 * rotate PDF files
@@ -21,27 +22,32 @@ listed below.
 ### pdfsplit.py
 With *pdfsplit* one PDF file can be split in multiple documents. The new documents are named according to the *-o* argument. The page number and the file ending *pdf* are added to the name automatically.
 
-```bash
-usage: pdfsplit.py [-h] [-o OUTPUT] [-s STEPSIZE] input
+```
+usage: pdfsplit.py [-h] [--version] [-o OUTPUT] [-s STEPSIZE]
+                   [-q SEQUENCE [SEQUENCE ...]]
+                   input
 
 Split a PDF file in multiple documents.
-
 
 positional arguments:
   input                 input file that shall be splitted
 
 optional arguments:
   -h, --help            show this help message and exit
+  --version             show program's version number and exit
   -o OUTPUT, --output OUTPUT
                         filename of the output files
   -s STEPSIZE, --stepsize STEPSIZE
-                        defines how many pages are packed in one file
+                        defines how many pages are packed in each output file
+  -q SEQUENCE [SEQUENCE ...], --sequence SEQUENCE [SEQUENCE ...]
+                        sequence of numbers describing how many pages to put
+                        in each outputfile
 ```
 
 ### pdfmerge.py
 This tool merges multiple input files to one output file. The page order is according to the order of the input files.
 
-```bash
+```
 usage: pdfmerge.py [-h] -o OUTPUT [-d] inputs [inputs ...]
 
 Merge the pages of multiple input files in one output file.
@@ -57,26 +63,34 @@ optional arguments:
 ```
 
 ### pdfrotate.py
-Rotate the pages of one or multiple input files clockwise or counterclockwise. The source file will be overwritten.
-```bash
-usage: pdfrotate.py [-h] [-c] inputs [inputs ...]
+Rotate pages of one input file clockwise or counterclockwise.
+```
+usage: pdfrotate.py [-h] [--version] [-c] [-p PAGES [PAGES ...]] [-o OUTPUT]
+                    input
 
-Rotate the pages of multiple input files by 90 degrees. Wildcards can be used.
+Rotate the pages of a PDF files by 90 degrees.
 
 positional arguments:
-  inputs      list of input files
+  input                 input file
 
 optional arguments:
-  -h, --help  show this help message and exit
-  -c          rotate pages counterclockwise
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -c                    rotate pages counterclockwise
+  -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                        list of page indices which will be rotated, if None
+                        all pages will be rotated (default)
+  -o OUTPUT, --output OUTPUT
+                        name of the output file, if None the source file will
+                        be overwritten
 ```
 
-## pdfzip.py
+### pdfzip.py
 Zip the pages of two input files in one output file. This is useful when
 dealing with scanned documents where even pages are in one docuemnt and
 odd pages in the other.
 
-```bash
+```
 usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
 
 Zip the pages of two documents in one output file.
@@ -92,9 +106,10 @@ filename of the output file
 -d, --delete          delete input files after merge
 ```
 
-## pdfinsert.py
+### pdfinsert.py
 Insert pages from one source file into a destination file.
-```bash
+
+```
 usage: pdfinsert.py [-h] [--version] [-o OUTPUT] [-p PAGES [PAGES ...]]
                     [-i INDEX]
                     dest source
