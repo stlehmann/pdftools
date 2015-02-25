@@ -2,20 +2,21 @@
 
 import sys
 import argparse
-from pdftools import pdf_merge
+from pdftools import parentparser, pdf_merge
 
 
 def process_arguments(args):
     parser = argparse.ArgumentParser(
+        parents=[parentparser],
         description="Merge the pages of multiple input files in one output file.")
-    #input
+    # input
     parser.add_argument('inputs',
                         type=str,
                         default=None,
                         nargs='+',
                         help='list of input files')
 
-    #output
+    # output
     parser.add_argument('-o',
                         '--output',
                         type=str,
@@ -23,7 +24,7 @@ def process_arguments(args):
                         help='filename of the output file',
                         required=True)
 
-    #delete
+    # delete
     parser.add_argument('-d',
                         '--delete',
                         action='store_true',

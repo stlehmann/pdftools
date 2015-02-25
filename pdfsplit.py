@@ -2,11 +2,14 @@
 
 import sys
 import argparse
-from pdftools import pdf_split
+from pdftools import parentparser, pdf_split
 
 
 def process_arguments(args):
-    parser = argparse.ArgumentParser(description="Split a PDF file in multiple documents.")
+    parser = argparse.ArgumentParser(
+        parents=[parentparser],
+        description="Split a PDF file in multiple documents."
+    )
     #input
     parser.add_argument('input',
                         type=str,

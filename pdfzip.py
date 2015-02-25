@@ -2,11 +2,12 @@
 
 import sys
 import argparse
-from pdftools import pdf_zip
+from pdftools import parentparser, pdf_zip
 
 
 def process_arguments(args):
     parser = argparse.ArgumentParser(
+        parents=[parentparser],
         description="Zip the pages of two documents in one output file.")
 
     #input1

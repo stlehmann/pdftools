@@ -2,11 +2,12 @@
 
 import sys
 import argparse
-from pdftools import pdf_rotate
+from pdftools import parentparser, pdf_rotate
 
 
 def process_arguments(args):
     parser = argparse.ArgumentParser(
+        parents=[parentparser],
         description="Rotate the pages of multiple input files by 90 degrees. "
                     "Wildcards can be used.")
     #input
