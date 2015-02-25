@@ -1,6 +1,6 @@
 pdftools
 ========
-* **Version** 1.0.1
+* **Version** 1.0.3
 * **Copyright (c)** 2015 Stefan Lehmann
 * **License:** MIT
 * **Description:** This is a small collection of convenience python scripts for fast pdf manipulation via commandline.
@@ -90,4 +90,32 @@ optional arguments:
 -o OUTPUT, --output OUTPUT
 filename of the output file
 -d, --delete          delete input files after merge
+```
+
+## pdfinsert.py
+Insert pages from one source file into a destination file.
+```bash
+usage: pdfinsert.py [-h] [--version] [-o OUTPUT] [-p PAGES [PAGES ...]]
+                    [-i INDEX]
+                    dest source
+
+Insert pages of one file in another.
+
+positional arguments:
+  dest                  destination pdf file
+  source                source pdf file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -o OUTPUT, --output OUTPUT
+                        filename of the output files, if None given dest will
+                        be used as output
+  -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                        list of pages to insert (start with 0), if None given
+                        all pages of source will be inserted
+  -i INDEX, --index INDEX
+                        page index of destination file where the pages will be
+                        inserted, if None they will be added at the end of the
+                        file
 ```

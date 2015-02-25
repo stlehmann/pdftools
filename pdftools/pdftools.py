@@ -2,7 +2,7 @@ import os
 import argparse
 from glob import glob
 from tempfile import NamedTemporaryFile
-from shutil import move
+from shutil import move, copy
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdftools import __version__
 
@@ -136,7 +136,7 @@ def pdf_zip(input1: str, input2: str, output: str, delete: bool=False):
     if os.path.isfile(output):
         ans = input("The file '%s' already exists. "
                     "Overwrite? Yes/Abort [Y/a]: " % output).lower()
-        if ans == "a":
+        if ans not in ['y', '']:
             return
     outputfile = open(output, "wb")
     try:
@@ -161,5 +161,62 @@ def pdf_zip(input1: str, input2: str, output: str, delete: bool=False):
         os.remove(input2)
 
 
-def pdf_insert(input1: str, input2: str, output: str=None):
-    pass
+def pdf_insert(dest: str, source: str,
+               pages: [int]=None, index: int=None,
+               output: str=None):
+    """
+    Insert pages from one file into another.
+    :param dest: Destination file
+    :param source: Source file
+    :param pages: list of page numbers to insert
+    :param index: index in destination file where to insert the pages
+    :param output: output file
+
+    """
+    if output is not None and os.path.isfile(output):
+        ans = input("The file '%s' already exists. "
+                    "Overwrite? Yes/Abort [Y/a]: " % output).lower()
+        if ans not in ['y', '']:
+            return
+
+    writer = PdfFileWriter()
+    # write pages from file1
+    f1 = open(dest, 'rb')
+    reader1 = PdfFileReader(f1)
+    for page in reader1.pages:
+        writer.addPage(page)
+
+    # write pages from file2
+    f2 = open(source, 'rb')
+    reader2 = PdfFileReader(f2)
+
+    # if no page numbers are given insert all pages
+    if pages is None:
+        for i, page in enumerate(reader2.pages):
+            if index is None:
+                writer.addPage(page)
+            else:
+                writer.insertPage(page, index + i)
+    else:
+        for i, pagenr in enumerate(pages):
+            page = reader2.getPage(pagenr)
+            if index is None:
+                writer.addPage(page)
+            else:
+                writer.insertPage(page, index + i)
+
+    if output is None:
+        # Write into Temporary File first and then overwrite dest file
+        ans = input("Overwrite the file '%s'? Yes/Abort [Y/a]: " %
+                    dest).lower()
+        if ans in ['y', '']:
+            tempfile = NamedTemporaryFile(delete=False)
+            writer.write(tempfile)
+            tempfile.close()
+            move(tempfile.name, dest)
+    else:
+        with open(output, "wb") as outfile:
+            writer.write(outfile)
+    f1.close()
+    f2.close()
+
