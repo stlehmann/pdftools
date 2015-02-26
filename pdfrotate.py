@@ -23,11 +23,11 @@ def process_arguments(args):
     # pages
     parser.add_argument('-p',
                         '--pages',
-                        type=int,
                         nargs='+',
                         default=None,
-                        help='list of page indices which will be rotated, '
-                             'if None all pages will be rotated (default)')
+                        help='list of page numbers which will be rotated, '
+                             'if None all pages will be rotated (default). '
+                             'Examples: 5 1-9 1- -9')
 
     # output
     parser.add_argument('-o',

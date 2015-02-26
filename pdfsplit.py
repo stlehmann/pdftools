@@ -42,5 +42,4 @@ def process_arguments(args):
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    print(args)
     pdf_split(args.input, args.output, args.stepsize, args.sequence)

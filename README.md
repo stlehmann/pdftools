@@ -78,10 +78,11 @@ optional arguments:
   --version             show program's version number and exit
   -c                    rotate pages counterclockwise
   -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
-                        list of page indices which will be rotated, if None
-                        all pages will be rotated (default)
+                        list of page numbers which will be rotated, if None
+                        all pages will be rotated (default). Examples: 5 1-9
+                        1- -9
   -o OUTPUT, --output OUTPUT
-                        name of the output file, if None the source file will
+                        name of the output file, if None the source filewill
                         be overwritten
 ```
 
@@ -127,10 +128,12 @@ optional arguments:
                         filename of the output files, if None given dest will
                         be used as output
   -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
-                        list of pages to insert (start with 0), if None given
-                        all pages of source will be inserted
+                        list of page numbers (start with 1) which will be
+                        inserted, if None all pages will be rotated (default),
+                        Examples: 5 1-9 1- -9
   -i INDEX, --index INDEX
-                        page index of destination file where the pages will be
-                        inserted, if None they will be added at the end of the
-                        file
+                        page number (start with 1) of destination file where
+                        the pages will be inserted, if None they will be added
+                        at the end of the file
+
 ```

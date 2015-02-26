@@ -29,23 +29,22 @@ def process_arguments(args):
     # pages
     parser.add_argument('-p',
                         '--pages',
-                        type=int,
                         nargs='+',
-                        help='list of pages to insert (start with 0), if None given all '
-                             'pages of source will be inserted')
+                        help='list of page numbers (start with 1) which will be'
+                             ' inserted, if None all pages will be rotated '
+                             '(default), Examples: 5 1-9 1- -9')
     # index
     parser.add_argument('-i',
                         '--index',
                         type=int,
                         default=None,
-                        help='page index of destination file where the pages '
-                             'will be inserted, if None they will be added at '
-                             'the end of the file')
+                        help='page number (start with 1) of destination file '
+                             'where the pages will be inserted, if None they '
+                             'will be added at the end of the file ')
 
     return parser.parse_args(args)
 
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    print(args)
     pdf_insert(args.dest, args.source, args.pages, args.index, args.output)

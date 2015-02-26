@@ -5,6 +5,7 @@ from tempfile import NamedTemporaryFile
 from shutil import move, copy
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdftools import __version__
+from pdftools.parseutil import parse_rangearg, limit
 
 
 parentparser = argparse.ArgumentParser(add_help=False)
@@ -57,13 +58,13 @@ def pdf_merge(inputs: [str], output: str, delete: bool=False):
             os.remove(filename)
 
 
-def pdf_rotate(input: str, counter_clockwise: bool=False, pages: [int]=None,
+def pdf_rotate(input: str, counter_clockwise: bool=False, pages: [str]=None,
                output: str=None):
     """
     Rotate the given Pdf files clockwise or counter clockwise.
     :param inputs: pdf files
     :param counter_clockwise: rotate counter clockwise if true else clockwise
-    :param pages: list of page indices to rotate, if None all pages will be
+    :param pages: list of page numbers to rotate, if None all pages will be
         rotated
     """
     infile = open(input, 'rb')
@@ -74,6 +75,7 @@ def pdf_rotate(input: str, counter_clockwise: bool=False, pages: [int]=None,
     if pages is None:
         source_pages = reader.pages
     else:
+        pages = parse_rangearg(pages, len(reader.pages))
         source_pages = [reader.getPage(i) for i in pages]
 
     # rotate pages and add to writer
@@ -101,7 +103,7 @@ def pdf_rotate(input: str, counter_clockwise: bool=False, pages: [int]=None,
     outfile.close()
 
     # If no output defined move temporary file to input
-    if outfile is None:
+    if output is None:
         if overwrite_dlg(input):
             os.remove(input)
             move(outfile.name, input)
@@ -195,7 +197,7 @@ def pdf_zip(input1: str, input2: str, output: str, delete: bool=False):
 
 
 def pdf_insert(dest: str, source: str,
-               pages: [int]=None, index: int=None,
+               pages: [str]=None, index: int=None,
                output: str=None):
     """
     Insert pages from one file into another.
@@ -213,26 +215,28 @@ def pdf_insert(dest: str, source: str,
             return
 
     writer = PdfFileWriter()
-    # write pages from file1
-    f1 = open(dest, 'rb')
-    reader1 = PdfFileReader(f1)
-    for page in reader1.pages:
+    # read pages from file1
+    destfile = open(dest, 'rb')
+    destreader = PdfFileReader(destfile)
+    for page in destreader.pages:
         writer.addPage(page)
 
-    # write pages from file2
-    f2 = open(source, 'rb')
-    reader2 = PdfFileReader(f2)
+    # read pages from file2
+    srcfile = open(source, 'rb')
+    srcreader = PdfFileReader(srcfile)
 
     # if no page numbers are given insert all pages
+    index = limit(index - 1, 0, len(destreader.pages))
     if pages is None:
-        for i, page in enumerate(reader2.pages):
+        for i, page in enumerate(srcreader.pages):
             if index is None:
                 writer.addPage(page)
             else:
                 writer.insertPage(page, index + i)
     else:
+        pages = parse_rangearg(pages, len(srcreader.pages))
         for i, pagenr in enumerate(pages):
-            page = reader2.getPage(pagenr)
+            page = srcreader.getPage(pagenr)
             if index is None:
                 writer.addPage(page)
             else:
@@ -250,6 +254,6 @@ def pdf_insert(dest: str, source: str,
     else:
         with open(output, "wb") as outfile:
             writer.write(outfile)
-    f1.close()
-    f2.close()
+    destfile.close()
+    srcfile.close()
 
