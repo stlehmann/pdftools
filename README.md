@@ -1,17 +1,17 @@
 pdftools
 ========
-* **Version** 1.0.3
+* **Version** 1.0.4
 * **Copyright (c)** 2015 Stefan Lehmann
 * **License:** MIT
-* **Description:** This is a small collection of convenience python scripts for fast pdf manipulation via commandline.
+* **Description:** This is a collection of convenience python scripts 
+for fast and painless pdf manipulation via commandline. It is based on the 
+PyPdf2 package.
 
 ## Features
 
-* insert pages
+* add, insert, remove and rotate pages
 * split PDF files in multiple documents
-* merge PDF files into one document
-* rotate PDF files
-* zip PDF files in one document
+* merge or zip PDF files into one document
 
 ## Usage
 
@@ -19,95 +19,35 @@ pdftools
 can be called via the commandline. The description for each script is
 listed below.
 
-### pdfsplit.py
-With *pdfsplit* one PDF file can be split in multiple documents. The new documents are named according to the *-o* argument. The page number and the file ending *pdf* are added to the name automatically.
+### pdfadd.py
+
+Add pages from a source pdf file to a destination file. The output is either 
+written in a new file or to the destination file.
 
 ```
-usage: pdfsplit.py [-h] [--version] [-o OUTPUT] [-s STEPSIZE]
-                   [-q SEQUENCE [SEQUENCE ...]]
-                   input
+usage: pdfadd.py [-h] [--version] [-p PAGES [PAGES ...]] [-o OUTPUT]
+                 dest source
 
-Split a PDF file in multiple documents.
+Add pages from a source file to an output PDF file. If the output file does
+not exist a new file will be created.
 
 positional arguments:
-  input                 input file that shall be splitted
+  dest                  destination pdf file
+  source                pdf source file
 
 optional arguments:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
-  -o OUTPUT, --output OUTPUT
-                        filename of the output files
-  -s STEPSIZE, --stepsize STEPSIZE
-                        defines how many pages are packed in each output file
-  -q SEQUENCE [SEQUENCE ...], --sequence SEQUENCE [SEQUENCE ...]
-                        sequence of numbers describing how many pages to put
-                        in each outputfile
-```
-
-### pdfmerge.py
-This tool merges multiple input files to one output file. The page order is according to the order of the input files.
-
-```
-usage: pdfmerge.py [-h] -o OUTPUT [-d] inputs [inputs ...]
-
-Merge the pages of multiple input files in one output file.
-
-positional arguments:
-  inputs                list of input files
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -o OUTPUT, --output OUTPUT
-                        filename of the output file
-  -d, --delete          delete input files after merge
-```
-
-### pdfrotate.py
-Rotate pages of one input file clockwise or counterclockwise.
-```
-usage: pdfrotate.py [-h] [--version] [-c] [-p PAGES [PAGES ...]] [-o OUTPUT]
-                    input
-
-Rotate the pages of a PDF files by 90 degrees.
-
-positional arguments:
-  input                 input file
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --version             show program's version number and exit
-  -c                    rotate pages counterclockwise
   -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
-                        list of page numbers which will be rotated, if None
-                        all pages will be rotated (default). Examples: 5 1-9
-                        1- -9
+                        list of pages to add to the output. Examples: 5 1-9 1-
+                        -9
   -o OUTPUT, --output OUTPUT
-                        name of the output file, if None the source filewill
-                        be overwritten
-```
-
-### pdfzip.py
-Zip the pages of two input files in one output file. This is useful when
-dealing with scanned documents where even pages are in one docuemnt and
-odd pages in the other.
-
-```
-usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
-
-Zip the pages of two documents in one output file.
-
-positional arguments:
-input1                first inputfile
-input2                second inputfile
-
-optional arguments:
--h, --help            show this help message and exit
--o OUTPUT, --output OUTPUT
-filename of the output file
--d, --delete          delete input files after merge
+                        name of the output file, if None the destinationfile
+                        will be overwritten
 ```
 
 ### pdfinsert.py
+
 Insert pages from one source file into a destination file.
 
 ```
@@ -135,5 +75,124 @@ optional arguments:
                         page number (start with 1) of destination file where
                         the pages will be inserted, if None they will be added
                         at the end of the file
+```
 
+### pdfremove.py
+
+Remove pages from a source pdf file.
+
+```
+usage: pdfremove.py [-h] [--version] -p PAGES [PAGES ...] [-o OUTPUT] source
+
+Remove pages from a PDF file.
+
+positional arguments:
+  source                pdf source file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                        list of pages to remove from file. Examples: 5 1-9 1-
+                        -9
+  -o OUTPUT, --output OUTPUT
+                        name of the output file, if None the source file will
+                        be overwritten
+
+```
+
+### pdfrotate.py
+
+Rotate pages of one input file clockwise or counterclockwise.
+
+```
+usage: pdfrotate.py [-h] [--version] [-c] [-p PAGES [PAGES ...]] [-o OUTPUT]
+                    input
+
+Rotate the pages of a PDF files by 90 degrees.
+
+positional arguments:
+  input                 input file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -c                    rotate pages counterclockwise
+  -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                        list of page numbers which will be rotated, if None
+                        all pages will be rotated (default). Examples: 5 1-9
+                        1- -9
+  -o OUTPUT, --output OUTPUT
+                        name of the output file, if None the source filewill
+                        be overwritten
+```
+
+### pdfsplit.py
+
+With *pdfsplit* one PDF file can be split in multiple documents.
+The new documents are named according to the *-o* argument. The page number
+and the file ending *pdf* are added to the name automatically.
+
+```
+usage: pdfsplit.py [-h] [--version] [-o OUTPUT] [-s STEPSIZE]
+                   [-q SEQUENCE [SEQUENCE ...]]
+                   input
+
+Split a PDF file in multiple documents.
+
+positional arguments:
+  input                 input file that shall be splitted
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -o OUTPUT, --output OUTPUT
+                        filename of the output files
+  -s STEPSIZE, --stepsize STEPSIZE
+                        defines how many pages are packed in each output file
+  -q SEQUENCE [SEQUENCE ...], --sequence SEQUENCE [SEQUENCE ...]
+                        sequence of numbers describing how many pages to put
+                        in each outputfile
+```
+
+### pdfmerge.py
+
+This tool merges multiple input files to one output file.
+The page order is according to the order of the input files.
+
+```
+usage: pdfmerge.py [-h] -o OUTPUT [-d] inputs [inputs ...]
+
+Merge the pages of multiple input files in one output file.
+
+positional arguments:n 
+  inputs                list of input files
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        filename of the output file
+  -d, --delete          delete input files after merge
+```
+
+### pdfzip.py
+
+Zip the pages of two input files in one output file. This is useful when
+dealing with scanned documents where even pages are in one docuemnt and
+odd pages in the other.
+
+```
+usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
+
+Zip the pages of two documents in one output file.
+
+positional arguments:
+input1                first inputfile
+input2                second inputfile
+
+optional arguments:
+-h, --help            show this help message and exit
+-o OUTPUT, --output OUTPUT
+filename of the output file
+-d, --delete          delete input files after merge
 ```

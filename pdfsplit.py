@@ -2,7 +2,8 @@
 
 import sys
 import argparse
-from pdftools import parentparser, pdf_split
+from pdftools import pdf_split
+from pdftools.parseutil import parentparser
 
 
 def process_arguments(args):

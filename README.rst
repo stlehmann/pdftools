@@ -1,19 +1,19 @@
 pdftools
 ========
 
--  **Version** 1.0.3
+-  **Version** 1.0.4
 -  **Copyright (c)** 2015 Stefan Lehmann
 -  **License:** MIT
--  **Description:** This is a small collection of convenience python
-   scripts for fast pdf manipulation via commandline.
+-  **Description:** This is a collection of convenience python scripts
+   for fast and painless pdf manipulation via commandline. It is based
+   on the PyPdf2 package.
 
 Features
 --------
 
+-  add, insert, remove and rotate pages
 -  split PDF files in multiple documents
--  merge PDF files into one document
--  rotate PDF files
--  zip PDF files in one document
+-  merge or zip PDF files into one document
 
 Usage
 -----
@@ -21,6 +21,117 @@ Usage
 *pdftools* adds some scripts to your existing Python installation that
 can be called via the commandline. The description for each script is
 listed below.
+
+pdfadd.py
+~~~~~~~~~
+
+Add pages from a source pdf file to a destination file. The output is
+either written in a new file or to the destination file.
+
+::
+
+    usage: pdfadd.py [-h] [--version] [-p PAGES [PAGES ...]] [-o OUTPUT]
+                     dest source
+
+    Add pages from a source file to an output PDF file. If the output file does
+    not exist a new file will be created.
+
+    positional arguments:
+      dest                  destination pdf file
+      source                pdf source file
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                            list of pages to add to the output. Examples: 5 1-9 1-
+                            -9
+      -o OUTPUT, --output OUTPUT
+                            name of the output file, if None the destinationfile
+                            will be overwritten
+
+pdfinsert.py
+~~~~~~~~~~~~
+
+Insert pages from one source file into a destination file.
+
+::
+
+    usage: pdfinsert.py [-h] [--version] [-o OUTPUT] [-p PAGES [PAGES ...]]
+                        [-i INDEX]
+                        dest source
+
+    Insert pages of one file in another.
+
+    positional arguments:
+      dest                  destination pdf file
+      source                source pdf file
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      -o OUTPUT, --output OUTPUT
+                            filename of the output files, if None given dest will
+                            be used as output
+      -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                            list of page numbers (start with 1) which will be
+                            inserted, if None all pages will be rotated (default),
+                            Examples: 5 1-9 1- -9
+      -i INDEX, --index INDEX
+                            page number (start with 1) of destination file where
+                            the pages will be inserted, if None they will be added
+                            at the end of the file
+
+pdfremove.py
+~~~~~~~~~~~~
+
+Remove pages from a source pdf file.
+
+::
+
+    usage: pdfremove.py [-h] [--version] -p PAGES [PAGES ...] [-o OUTPUT] source
+
+    Remove pages from a PDF file.
+
+    positional arguments:
+      source                pdf source file
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                            list of pages to remove from file. Examples: 5 1-9 1-
+                            -9
+      -o OUTPUT, --output OUTPUT
+                            name of the output file, if None the source file will
+                            be overwritten
+
+pdfrotate.py
+~~~~~~~~~~~~
+
+Rotate pages of one input file clockwise or counterclockwise.
+
+::
+
+    usage: pdfrotate.py [-h] [--version] [-c] [-p PAGES [PAGES ...]] [-o OUTPUT]
+                        input
+
+    Rotate the pages of a PDF files by 90 degrees.
+
+    positional arguments:
+      input                 input file
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      -c                    rotate pages counterclockwise
+      -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                            list of page numbers which will be rotated, if None
+                            all pages will be rotated (default). Examples: 5 1-9
+                            1- -9
+      -o OUTPUT, --output OUTPUT
+                            name of the output file, if None the source filewill
+                            be overwritten
 
 pdfsplit.py
 ~~~~~~~~~~~
@@ -63,7 +174,7 @@ is according to the order of the input files.
 
     Merge the pages of multiple input files in one output file.
 
-    positional arguments:
+    positional arguments:n 
       inputs                list of input files
 
     optional arguments:
@@ -71,25 +182,6 @@ is according to the order of the input files.
       -o OUTPUT, --output OUTPUT
                             filename of the output file
       -d, --delete          delete input files after merge
-
-pdfrotate.py
-~~~~~~~~~~~~
-
-Rotate the pages of one or multiple input files clockwise or
-counterclockwise. The source file will be overwritten.
-
-::
-
-    usage: pdfrotate.py [-h] [-c] inputs [inputs ...]
-
-    Rotate the pages of multiple input files by 90 degrees. Wildcards can be used.
-
-    positional arguments:
-      inputs      list of input files
-
-    optional arguments:
-      -h, --help  show this help message and exit
-      -c          rotate pages counterclockwise
 
 pdfzip.py
 ~~~~~~~~~
@@ -113,34 +205,3 @@ odd pages in the other.
     -o OUTPUT, --output OUTPUT
     filename of the output file
     -d, --delete          delete input files after merge
-
-pdfinsert.py
-~~~~~~~~~~~~
-
-Insert pages from one source file into a destination file.
-
-::
-
-    usage: pdfinsert.py [-h] [--version] [-o OUTPUT] [-p PAGES [PAGES ...]]
-                        [-i INDEX]
-                        dest source
-
-    Insert pages of one file in another.
-
-    positional arguments:
-      dest                  destination pdf file
-      source                source pdf file
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      --version             show program's version number and exit
-      -o OUTPUT, --output OUTPUT
-                            filename of the output files, if None given dest will
-                            be used as output
-      -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
-                            list of pages to insert (start with 0), if None given
-                            all pages of source will be inserted
-      -i INDEX, --index INDEX
-                            page index of destination file where the pages will be
-                            inserted, if None they will be added at the end of the
-                            file

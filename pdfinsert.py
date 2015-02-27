@@ -2,7 +2,8 @@
 
 import sys
 import argparse
-from pdftools import parentparser, pdf_insert
+from pdftools import pdf_insert
+from pdftools.parseutil import parentparser
 
 
 def process_arguments(args):

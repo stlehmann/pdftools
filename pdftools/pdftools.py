@@ -1,19 +1,8 @@
 import os
-import argparse
-from glob import glob
 from tempfile import NamedTemporaryFile
 from shutil import move, copy
 from PyPDF2 import PdfFileReader, PdfFileWriter
-from pdftools import __version__
 from pdftools.parseutil import parse_rangearg, limit
-
-
-parentparser = argparse.ArgumentParser(add_help=False)
-parentparser.add_argument(
-    '--version',
-    action='version',
-    version='%(prog)s (pdftools) ' + __version__
-)
 
 
 def overwrite_dlg(filename):
@@ -256,4 +245,99 @@ def pdf_insert(dest: str, source: str,
             writer.write(outfile)
     destfile.close()
     srcfile.close()
+
+
+def pdf_remove(source: str, pages: [str], output: str=None):
+    """
+    Remove pages from a PDF source file.
+    :param source: pdf source file
+    :param pages: list of page numbers or range expressions
+    :param output: pdf output file
+
+    """
+    if output is not None and os.path.isfile(output):
+        if overwrite_dlg(output) is False:
+            return
+
+    writer = PdfFileWriter()
+    srcfile = open(source, 'rb')
+    srcreader = PdfFileReader(srcfile)
+
+    # Add pages, leave out removed pages
+    pages = parse_rangearg(pages, len(srcreader.pages))
+    for pagenr, page in enumerate(srcreader.pages):
+        if pagenr not in pages:
+            writer.addPage(page)
+
+    # Open output file or temporary file for writing
+    if output is None:
+        outfile = NamedTemporaryFile(delete=False)
+    else:
+        outfile = open(output, 'wb')
+
+    # Write file and close
+    writer.write(outfile)
+    srcfile.close()
+    outfile.close()
+
+    # Move temporary file to source
+    if output is None:
+        if overwrite_dlg(source):
+            os.remove(source)
+            move(outfile.name, source)
+        else:
+            os.remove(outfile)
+
+
+def pdf_add(dest: str, source: str, pages: [str], output: str):
+    """
+    Add pages from a source pdf file to an output file. If the output
+    file does not exist a new file will be created.
+    :param source: source pdf file
+    :param dest: destination pdf file
+    :param pages: list of page numbers or range expressions
+    :param output: output pdf file
+
+    """
+    if output is not None and os.path.isfile(output):
+        if not overwrite_dlg(output):
+            return
+
+    writer = PdfFileWriter()
+
+    # read pages from destination file
+    destfile = open(dest, 'rb')
+    destreader = PdfFileReader(destfile)
+    for page in destreader.pages:
+        writer.addPage(page)
+
+    # read pages from source file
+    srcfile = open(source, 'rb')
+    srcreader = PdfFileReader(srcfile)
+
+    # if no page numbers are given add all pages from source
+    if pages is None:
+        for i, page in enumerate(srcreader.pages):
+            writer.addPage(page)
+    else:
+        pages = parse_rangearg(pages, len(srcreader.pages))
+        for pagenr in pages:
+            page = srcreader.getPage(pagenr)
+            writer.addPage(page)
+
+    if output is None:
+        # Write into Temporary File first and then overwrite dest file
+        if overwrite_dlg(dest):
+            tempfile = NamedTemporaryFile(delete=False)
+            writer.write(tempfile)
+            tempfile.close()
+            destfile.close()
+            srcfile.close()
+            os.remove(dest)
+            move(tempfile.name, dest)
+    else:
+        with open(output, "wb") as outfile:
+            writer.write(outfile)
+            destfile.close()
+            srcfile.close()
 

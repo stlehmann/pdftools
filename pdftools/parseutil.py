@@ -1,4 +1,12 @@
-__author__ = 'lehmann'
+import argparse
+from pdftools import __version__
+
+parentparser = argparse.ArgumentParser(add_help=False)
+parentparser.add_argument(
+    '--version',
+    action='version',
+    version='%(prog)s (pdftools) ' + __version__
+)
 
 
 def limit(val, min_, max_):
