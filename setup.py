@@ -1,4 +1,4 @@
-#! python3
+#!/usr/bin/env python
 from setuptools import setup
 from pdftools import __version__
 
