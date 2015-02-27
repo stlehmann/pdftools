@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup
-from pdftools import __version__
+__version__ = "1.0.6"
 
 setup(
     name='pdftools',

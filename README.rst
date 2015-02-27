@@ -1,7 +1,7 @@
 pdftools
 ========
 
--  **Version** 1.0.4
+-  **Version** 1.0.5
 -  **Copyright (c)** 2015 Stefan Lehmann
 -  **License:** MIT
 -  **Description:** This is a collection of convenience python scripts
@@ -174,7 +174,7 @@ is according to the order of the input files.
 
     Merge the pages of multiple input files in one output file.
 
-    positional arguments:n 
+    positional arguments:n
       inputs                list of input files
 
     optional arguments:
@@ -205,3 +205,4 @@ odd pages in the other.
     -o OUTPUT, --output OUTPUT
     filename of the output file
     -d, --delete          delete input files after merge
+

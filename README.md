@@ -1,10 +1,10 @@
 pdftools
 ========
-* **Version** 1.0.4
+* **Version** 1.0.6
 * **Copyright (c)** 2015 Stefan Lehmann
 * **License:** MIT
-* **Description:** This is a collection of convenience python scripts 
-for fast and painless pdf manipulation via commandline. It is based on the 
+* **Description:** This is a collection of convenience python scripts
+for fast and painless pdf manipulation via commandline. It is based on the
 PyPdf2 package.
 
 ## Features
@@ -21,7 +21,7 @@ listed below.
 
 ### pdfadd.py
 
-Add pages from a source pdf file to a destination file. The output is either 
+Add pages from a source pdf file to a destination file. The output is either
 written in a new file or to the destination file.
 
 ```
@@ -165,7 +165,7 @@ usage: pdfmerge.py [-h] -o OUTPUT [-d] inputs [inputs ...]
 
 Merge the pages of multiple input files in one output file.
 
-positional arguments:n 
+positional arguments:n
   inputs                list of input files
 
 optional arguments:
