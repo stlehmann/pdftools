@@ -11,22 +11,22 @@ def process_arguments(args):
         parents=[parentparser],
         description="Zip the pages of two documents in one output file.")
 
-    #input1
+    # input1
     parser.add_argument('input1',
                         type=str,
                         help='first inputfile')
-    #input2
+    # input2
     parser.add_argument('input2',
-                    type=str,
-                    help='second inputfile')
-    #output
+                        type=str,
+                        help='second inputfile')
+    # output
     parser.add_argument('-o',
                         '--output',
                         type=str,
                         default=None,
                         help='filename of the output file',
                         required=True)
-    #delete
+    # delete
     parser.add_argument('-d',
                         '--delete',
                         action='store_true',
