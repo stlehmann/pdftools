@@ -147,7 +147,7 @@ def pdf_split(input: str, output: str, stepsize: int=1, sequence: [int]=None):
             outputfile.close()
 
 
-def pdf_zip(input1: str, input2: str, output: str, delete: bool=False):
+def pdf_zip(input1: str, input2: str, output: str, delete: bool=False, revert: bool=False):
     """
     Zip pages of input1 and input2 in one output file. Useful for putting
     even and odd pages together in one document.
@@ -169,9 +169,14 @@ def pdf_zip(input1: str, input2: str, output: str, delete: bool=False):
         writer = PdfFileWriter()
         pages1 = [page for page in r1.pages]
         pages2 = [page for page in r2.pages]
-        for p1, p2 in zip(pages1, pages2):
-            writer.addPage(p1)
-            writer.addPage(p2)
+        if not revert:
+            for p1, p2 in zip(pages1, pages2):
+                writer.addPage(p1)
+                writer.addPage(p2)
+        else:
+            for p1, p2 in zip(pages1, reversed(pages2)):
+                writer.addPage(p1)
+                writer.addPage(p2)
         writer.write(outputfile)
         f1.close()
         f2.close()

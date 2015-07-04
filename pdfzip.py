@@ -31,9 +31,14 @@ def process_arguments(args):
                         '--delete',
                         action='store_true',
                         help='delete input files after merge')
+    # revert
+    parser.add_argument('-r',
+                        '--revert',
+                        action='store_true',
+                        help='revert the pages of second input file')
     return parser.parse_args(args)
 
 
 if __name__ == "__main__":
     args = process_arguments(sys.argv[1:])
-    pdf_zip(args.input1, args.input2, args.output, args.delete)
+    pdf_zip(args.input1, args.input2, args.output, args.delete, args.revert)
