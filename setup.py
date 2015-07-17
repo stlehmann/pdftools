@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 from setuptools import setup
-__version__ = "1.0.6"
+import versioneer
 
 setup(
     name='pdftools',
-    version=__version__,
+    version=versioneer.get_version(),
     packages=['pdftools'],
     scripts=['pdfsplit.py', 'pdfmerge.py', 'pdfrotate.py', 'pdfzip.py',
              'pdfinsert.py', 'pdfremove.py', 'pdfadd.py'],
@@ -15,5 +15,6 @@ setup(
     description='A collection of convenience scripts for pdf manipulation, '
                 'based on the PyPdf2 package.',
     install_requires=['PyPdf2'],
-    maintainer='Stefan Lehmann'
+    maintainer='Stefan Lehmann',
+    cmdclass=versioneer.get_cmdclass()
 )

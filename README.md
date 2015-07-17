@@ -1,6 +1,5 @@
 pdftools
 ========
-* **Version** 1.0.6
 * **Copyright (c)** 2015 Stefan Lehmann
 * **License:** MIT
 * **Description:** This is a collection of convenience python scripts

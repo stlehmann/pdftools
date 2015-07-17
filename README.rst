@@ -1,7 +1,6 @@
 pdftools
 ========
 
--  **Version** 1.0.5
 -  **Copyright (c)** 2015 Stefan Lehmann
 -  **License:** MIT
 -  **Description:** This is a collection of convenience python scripts
@@ -205,4 +204,3 @@ odd pages in the other.
     -o OUTPUT, --output OUTPUT
     filename of the output file
     -d, --delete          delete input files after merge
-
