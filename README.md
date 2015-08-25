@@ -1,11 +1,12 @@
 pdftools
 ========
-* **Version** 1.0.6
 * **Copyright (c)** 2015 Stefan Lehmann
 * **License:** MIT
 * **Description:** This is a collection of convenience python scripts
 for fast and painless pdf manipulation via commandline. It is based on the
 PyPdf2 package.
+
+[![Code Issues](http://www.quantifiedcode.com/api/v1/project/c09bff5bdc1f466b92361ce25fead1d5/badge.svg)](http://www.quantifiedcode.com/app/project/c09bff5bdc1f466b92361ce25fead1d5)
 
 ## Features
 
