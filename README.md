@@ -182,6 +182,11 @@ Zip the pages of two input files in one output file. This is useful when
 dealing with scanned documents where even pages are in one docuemnt and
 odd pages in the other.
 
+To merge a multiple page document which was scanned with a non-duplex-scanner
+one can use the *--revert* option. In this case one gets e.g. one pdf with pages
+1,3 and 5 and another pdf with the pages 6,4 and 2. In order to merge/zip them
+correctly the second pdf needs to be reversed.
+
 ```
 usage: pdfzip.py [-h] -o OUTPUT [-d] input1 input2
 
@@ -196,4 +201,5 @@ optional arguments:
 -o OUTPUT, --output OUTPUT
 filename of the output file
 -d, --delete          delete input files after merge
+-r, --revert          revert the pages of second input file
 ```
