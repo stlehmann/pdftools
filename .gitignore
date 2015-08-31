@@ -60,3 +60,4 @@ docs/_build/
 
 #Additional files
 samples
+*.sublime-workspace
