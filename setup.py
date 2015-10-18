@@ -7,7 +7,7 @@ import versioneer
 
 # use pandoc to convert README.md to README.rst
 if any(s in sys.argv for s in ("upload", "register")):
-    os.system("pandoc {} -o {}".format("README.md", "README.rst"))
+    os.system("pandoc {0} -o {1}".format("README.md", "README.rst"))
 
 
 if os.path.exists("README.rst"):
