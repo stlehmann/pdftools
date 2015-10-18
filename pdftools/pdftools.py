@@ -1,6 +1,6 @@
 import os
 from tempfile import NamedTemporaryFile
-from shutil import move, copy
+from shutil import move
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from pdftools.parseutil import parse_rangearg, limit
 
@@ -68,7 +68,7 @@ def pdf_rotate(input: str, counter_clockwise: bool=False, pages: [str]=None,
         source_pages = [reader.getPage(i) for i in pages]
 
     # rotate pages and add to writer
-    for i, page in enumerate(reader.pages):
+    for i, page in enumerate(source_pages):
         if pages is None or i in pages:
             if counter_clockwise:
                 writer.addPage(page.rotateCounterClockwise(90))
@@ -147,7 +147,8 @@ def pdf_split(input: str, output: str, stepsize: int=1, sequence: [int]=None):
             outputfile.close()
 
 
-def pdf_zip(input1: str, input2: str, output: str, delete: bool=False, revert: bool=False):
+def pdf_zip(input1: str, input2: str, output: str, delete: bool=False,
+            revert: bool=False):
     """
     Zip pages of input1 and input2 in one output file. Useful for putting
     even and odd pages together in one document.
