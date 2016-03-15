@@ -12,6 +12,7 @@ PyPdf2 package.
 
 * add, insert, remove and rotate pages
 * split PDF files in multiple documents
+* copy specific pages in a new document
 * merge or zip PDF files into one document
 
 ## Usage
@@ -45,6 +46,32 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         name of the output file, if None the destinationfile
                         will be overwritten
+```
+
+### pdfcopy.py
+
+Copy specific pages of a PDF file in a new file.
+
+```
+usage: pdfcopy.py [-h] [--version] [-o OUTPUT] [-p PAGES [PAGES ...]] [-y]
+                  input
+
+Copy specific pages of a PDF file in a new file.
+
+positional arguments:
+  input                 input file containing the source pages
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -o OUTPUT, --output OUTPUT
+                        filename of the output file
+  -p PAGES [PAGES ...], --pages PAGES [PAGES ...]
+                        list of pages to copy in the new file. Examples: "5 8
+                        10": Pages 5, 8, 10; "1-9": Pages 1 to 9; "5-": Pages
+                        from 5 to last page; "-9": Pages from beginning to 9
+  -y                    yes to all
+
 ```
 
 ### pdfinsert.py

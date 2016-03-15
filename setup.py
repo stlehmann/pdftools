@@ -22,7 +22,7 @@ setup(
     version=versioneer.get_version(),
     packages=['pdftools'],
     scripts=['pdfsplit.py', 'pdfmerge.py', 'pdfrotate.py', 'pdfzip.py',
-             'pdfinsert.py', 'pdfremove.py', 'pdfadd.py'],
+             'pdfinsert.py', 'pdfremove.py', 'pdfadd.py', 'pdfcopy.py'],
     url='https://github.com/MrLeeh/pdftools',
     license='MIT',
     author='Stefan Lehmann',

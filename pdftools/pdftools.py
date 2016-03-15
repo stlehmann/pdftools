@@ -100,6 +100,37 @@ def pdf_rotate(input: str, counter_clockwise: bool=False, pages: [str]=None,
             os.remove(outfile.name)
 
 
+def pdf_copy(input: str, output: str, pages: [int], yes_to_all=False):
+    """
+    Copy pages from the input file in a new output file.
+    :param input: name of the input pdf file
+    :param output: name of the output pdf file
+    :param pages: list containing the page numbers to copy in the new file
+
+    """
+    if not os.path.isfile(input):
+        print("Error. The file '%s' does not exist." % input)
+        return
+    if (os.path.isfile(output)
+            and not yes_to_all
+            and not overwrite_dlg(output)):
+        return
+
+    with open(input, 'rb') as inputfile:
+        reader = PdfFileReader(inputfile)
+        outputfile = open(output, "wb")
+        writer = PdfFileWriter()
+        if pages is None:
+            pages = range(len(reader.pages))
+        else:
+            pages = parse_rangearg(pages, len(reader.pages))
+        for pagenr in sorted(pages):
+            page = reader.getPage(pagenr)
+            writer.addPage(page)
+            writer.write(outputfile)
+        outputfile.close()
+
+
 def pdf_split(input: str, output: str, stepsize: int=1, sequence: [int]=None):
     """
     Split the input file in multiple output files
