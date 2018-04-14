@@ -61,5 +61,6 @@ docs/_build/
 #Additional files
 samples
 *.sublime-workspace
+*.sublime-project
 .DS_Store
 *.pdf
