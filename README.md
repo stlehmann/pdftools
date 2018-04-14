@@ -6,7 +6,7 @@ pdftools
 for fast and painless pdf manipulation via commandline. It is based on the
 PyPdf2 package.
 
-[![Build Status](https://travis-ci.org/MrLeeh/pdftools.svg?branch=master)](https://travis-ci.org/MrLeeh/pdftools) [![Code Issues](http://www.quantifiedcode.com/api/v1/project/c09bff5bdc1f466b92361ce25fead1d5/badge.svg)](http://www.quantifiedcode.com/app/project/c09bff5bdc1f466b92361ce25fead1d5)
+[![Build Status](https://travis-ci.org/stlehmann/pdftools.svg?branch=master)](https://travis-ci.org/stlehmann/pdftools)
 
 ## Features
 
