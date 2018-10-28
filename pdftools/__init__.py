@@ -6,10 +6,10 @@ pdftools Package.
 
 :created on 2018-04-14 20:35:21
 :last modified by:   Stefan Lehmann
-:last modified time: 2018-04-14 21:06:14
+:last modified time: 2018-10-28 16:57:24
 
 """
-__version__ = "1.1.2"
+__version__ = "1.1.4"
 
 
 from pdftools.pdftools import (  # noqa: F401
