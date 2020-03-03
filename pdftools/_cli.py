@@ -205,6 +205,22 @@ def main():
         help="Python-like zipping (interleaving) the pages of two documents in one output file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser_zip.add_argument("src1", type=str, help="First source file")
+    parser_zip.add_argument("src2", type=str, help="Second source file")
+    parser_zip.add_argument(
+        "output", type=str, help="Output filename",
+    )
+    # delete
+    parser_zip.add_argument(
+        "-d", "--delete", action="store_true", help="Delete source files after merge"
+    )
+    # revert
+    parser_zip.add_argument(
+        "-r",
+        "--revert",
+        action="store_true",
+        help="Revert the pages of second input file",
+    )
 
     # parse arguments from command line
     ARGS = PARSER.parse_args()
@@ -246,4 +262,4 @@ def main():
     elif ARGS.command == "zip":
         from pdftools.pdftools import pdf_zip
 
-        pdf_zip()
+        pdf_zip(ARGS.src1, ARGS.src2, ARGS.output, ARGS.delete, ARGS.revert)
