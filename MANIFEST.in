@@ -1,2 +1,0 @@
-include versioneer.py
-include pdftools/_version.py
