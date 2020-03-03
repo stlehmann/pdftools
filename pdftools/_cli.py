@@ -10,7 +10,7 @@ def main():
     )
     # global options
     PARSER.add_argument(
-        "--version", action="store_true", help="Print version number and exit"
+        "-V", "--version", action="store_true", help="Print version number and exit"
     )
 
     SUBPARSERS = PARSER.add_subparsers(
