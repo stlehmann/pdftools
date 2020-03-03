@@ -117,21 +117,46 @@ def main():
         "-d", "--delete", action="store_true", help="Delete source files after merge",
     )
 
+    # Remove
+    # --------------------------------------------
     parser_remove = SUBPARSERS.add_parser(
         "remove",
         help="Remove pages from a PDF file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser_remove.add_argument("src", type=str, default=None, help="PDF source file")
+    parser_remove.add_argument(
+        "pages",
+        nargs="+",
+        help="List of pages to remove from file. Examples: 5; 1-9; 1-; -9",
+    )
+    # output
+    parser_remove.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        default=None,
+        help="Output filename. If None, the source file will be overwritten",
+    )
+
+    # Rotate
+    # --------------------------------------------
     parser_rotate = SUBPARSERS.add_parser(
         "rotate",
         help="Rotate the pages of a PDF files by 90 degrees",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+
+    # Split
+    # --------------------------------------------
     parser_split = SUBPARSERS.add_parser(
         "split",
         help="Split a PDF file into multiple documents",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+
+    # Zip
+    # --------------------------------------------
     parser_zip = SUBPARSERS.add_parser(
         "zip",
         help="Python-like zipping (interleaving) the pages of two documents in one output file",
@@ -166,7 +191,7 @@ def main():
     elif ARGS.command == "remove":
         from pdftools.pdftools import pdf_remove
 
-        pdf_remove()
+        pdf_remove(ARGS.src, ARGS.pages, ARGS.output)
     elif ARGS.command == "rotate":
         from pdftools.pdftools import pdf_rotate
 
