@@ -176,6 +176,27 @@ def main():
         help="Split a PDF file into multiple documents",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser_split.add_argument(
+        "src", type=str, default=None, help="Source file to be split",
+    )
+    parser_split.add_argument(
+        "-o", "--output", type=str, default=None, help="Output filenames",
+    )
+    parser_split.add_argument(
+        "-s",
+        "--stepsize",
+        dest="stepsize",
+        type=int,
+        default=1,
+        help="How many pages are packed in each output file",
+    )
+    parser_split.add_argument(
+        "-q",
+        "--sequence",
+        dest="sequence",
+        nargs="+",
+        help="Sequence of numbers describing how many pages to put in each outputfile",
+    )
 
     # Zip
     # --------------------------------------------
@@ -221,7 +242,7 @@ def main():
     elif ARGS.command == "split":
         from pdftools.pdftools import pdf_split
 
-        pdf_split()
+        pdf_split(ARGS.src, ARGS.output, ARGS.stepsize, ARGS.sequence)
     elif ARGS.command == "zip":
         from pdftools.pdftools import pdf_zip
 
