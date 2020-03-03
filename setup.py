@@ -12,16 +12,16 @@ Setupfile for pdftools.
 """
 import ast
 import re
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 # Regular expression for the version
-_version_re = re.compile(r'__version__\s+=\s+(.*)')
+_version_re = re.compile(r"__version__\s+=\s+(.*)")
 
 
 def extract_version():
     """Extract the version from the package."""
-    with open('pdftools/__init__.py', 'r') as f:
+    with open("pdftools/__init__.py", "r") as f:
         content = f.read()
 
     version_match = _version_re.search(content)
@@ -30,17 +30,16 @@ def extract_version():
 
 
 setup(
-    name='pdftools',
+    name="pdftools",
     version=extract_version(),
-    packages=['pdftools'],
-    scripts=['pdfsplit.py', 'pdfmerge.py', 'pdfrotate.py', 'pdfzip.py',
-             'pdfinsert.py', 'pdfremove.py', 'pdfadd.py', 'pdfcopy.py'],
-    url='https://github.com/MrLeeh/pdftools',
-    license='MIT',
-    author='Stefan Lehmann',
-    author_email='Stefan.St.Lehmann@gmail.com',
-    description='A collection of convenience scripts for pdf manipulation, '
-                'based on the PyPdf2 package.',
-    install_requires=['PyPdf2'],
-    maintainer='Stefan Lehmann',
+    packages=find_packages(),
+    entry_points={"console_scripts": ["pdftools=pdftools._cli:main"]},
+    url="https://github.com/MrLeeh/pdftools",
+    license="MIT",
+    author="Stefan Lehmann",
+    author_email="Stefan.St.Lehmann@gmail.com",
+    description="A collection of convenience scripts for PDF manipulation, based on the PyPdf2 package",
+    install_requires=["PyPdf2"],
+    maintainer="Stefan Lehmann",
+    zip_safe=True,
 )
