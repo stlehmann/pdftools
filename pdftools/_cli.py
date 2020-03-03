@@ -100,11 +100,23 @@ def main():
         help="Page number (1-indexed) of destination file where the pages will be inserted. If None they will be added at the end of the file",
     )
 
+    # Merge
+    # --------------------------------------------
     parser_merge = SUBPARSERS.add_parser(
         "merge",
         help="Merge the pages of multiple input files into one output file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser_merge.add_argument(
+        "src", type=str, default=None, nargs="+", help="List of input source files"
+    )
+    parser_merge.add_argument(
+        "output", type=str, default=None, help="Output filename",
+    )
+    parser_merge.add_argument(
+        "-d", "--delete", action="store_true", help="Delete source files after merge",
+    )
+
     parser_remove = SUBPARSERS.add_parser(
         "remove",
         help="Remove pages from a PDF file",
@@ -150,7 +162,7 @@ def main():
     elif ARGS.command == "merge":
         from pdftools.pdftools import pdf_merge
 
-        pdf_merge()
+        pdf_merge(ARGS.src, ARGS.output, ARGS.delete)
     elif ARGS.command == "remove":
         from pdftools.pdftools import pdf_remove
 
