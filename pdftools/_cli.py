@@ -147,3 +147,23 @@ def main():
         from pdftools.pdftools import pdf_insert
 
         pdf_insert(ARGS.dest, ARGS.src, ARGS.pages, ARGS.index, ARGS.output)
+    elif ARGS.command == "merge":
+        from pdftools.pdftools import pdf_merge
+
+        pdf_merge()
+    elif ARGS.command == "remove":
+        from pdftools.pdftools import pdf_remove
+
+        pdf_remove()
+    elif ARGS.command == "rotate":
+        from pdftools.pdftools import pdf_rotate
+
+        pdf_rotate()
+    elif ARGS.command == "split":
+        from pdftools.pdftools import pdf_split
+
+        pdf_split()
+    elif ARGS.command == "zip":
+        from pdftools.pdftools import pdf_zip
+
+        pdf_zip()
