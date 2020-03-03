@@ -146,6 +146,28 @@ def main():
         help="Rotate the pages of a PDF files by 90 degrees",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser_rotate.add_argument("src", type=str, default=None, help="Source file")
+    parser_rotate.add_argument(
+        "-c",
+        "--counter-clockwise",
+        action="store_true",
+        dest="counter_clockwise",
+        help="Rotate pages counter-clockwise instead of clockwise, by default",
+    )
+    parser_rotate.add_argument(
+        "-p",
+        "--pages",
+        nargs="+",
+        default=None,
+        help="List of page numbers which will be rotated. If None, all pages will be rotated. Examples: 5; 1-9; 1-; -9",
+    )
+    parser_rotate.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        default=None,
+        help="Output filename. If None, the source file will be overwritten",
+    )
 
     # Split
     # --------------------------------------------
@@ -195,7 +217,7 @@ def main():
     elif ARGS.command == "rotate":
         from pdftools.pdftools import pdf_rotate
 
-        pdf_rotate()
+        pdf_rotate(ARGS.src, ARGS.counter_clockwise, ARGS.pages, ARGS.output)
     elif ARGS.command == "split":
         from pdftools.pdftools import pdf_split
 
