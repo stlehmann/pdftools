@@ -29,7 +29,7 @@ def main():
     parser_add.add_argument(
         "-p",
         "--pages",
-        nARGS="+",
+        nargs="+",
         help="list of pages to add to the output. Examples: 5; 1-9; 1-; -9",
     )
     # output
@@ -78,7 +78,7 @@ def main():
     )
 
     # parse arguments from command line
-    ARGS = PARSER.parse_ARGS()
+    ARGS = PARSER.parse_args()
 
     # validate command line arguments for the give sub-command
     # import packages after parsing to speed up command line responsiveness
