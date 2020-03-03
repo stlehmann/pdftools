@@ -25,7 +25,7 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_add.add_argument("dest", type=str, help="Destination PDF file")
-    parser_add.add_argument("source", type=str, default=None, help="PDF source file")
+    parser_add.add_argument("src", type=str, default=None, help="PDF source file")
     parser_add.add_argument(
         "-p",
         "--pages",
@@ -49,7 +49,7 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_copy.add_argument(
-        "input", type=str, default=None, help="input file containing the source pages"
+        "src", type=str, default=None, help="Source PDF containing pages to copy"
     )
     parser_copy.add_argument(
         "-o", "--output", type=str, default=None, help="filename of the output file"
@@ -70,11 +70,36 @@ def main():
     )
     parser_copy.add_argument("-y", action="store_true", help="yes to all")
 
+    # Insert
+    # --------------------------------------------
     parser_insert = SUBPARSERS.add_parser(
         "insert",
         help="Insert pages of one file into another",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser_insert.add_argument("dest", type=str, help="Destination PDF file")
+    parser_insert.add_argument("src", type=str, help="Source PDF file")
+    parser_insert.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        default=None,
+        help="Output file name. If None given, `dest` will be used as output and overwritten",
+    )
+    parser_insert.add_argument(
+        "-p",
+        "--pages",
+        nargs="+",
+        help="List of page numbers (start with 1) which will be inserted. If None, all pages will be inserted (default). Examples: 5; 1-9; 1-; -9",
+    )
+    parser_insert.add_argument(
+        "-i",
+        "--index",
+        type=int,
+        default=None,
+        help="Page number (1-indexed) of destination file where the pages will be inserted. If None they will be added at the end of the file",
+    )
+
     parser_merge = SUBPARSERS.add_parser(
         "merge",
         help="Merge the pages of multiple input files into one output file",
@@ -113,8 +138,12 @@ def main():
     if ARGS.command == "add":
         from pdftools.pdftools import pdf_add
 
-        pdf_add(ARGS.dest, ARGS.source, ARGS.pages, ARGS.output)
+        pdf_add(ARGS.dest, ARGS.src, ARGS.pages, ARGS.output)
     elif ARGS.command == "copy":
         from pdftools.pdftools import pdf_copy
 
         pdf_copy(ARGS.input, ARGS.output, ARGS.pages, ARGS.y)
+    elif ARGS.command == "insert":
+        from pdftools.pdftools import pdf_insert
+
+        pdf_insert(ARGS.dest, ARGS.src, ARGS.pages, ARGS.index, ARGS.output)
