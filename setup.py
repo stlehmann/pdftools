@@ -15,12 +15,10 @@ import re
 from setuptools import setup, find_packages
 
 
-# Regular expression for the version
-_version_re = re.compile(r"__version__\s+=\s+(.*)")
-
-
 def extract_version():
     """Extract the version from the package."""
+    # Regular expression for the version
+    _version_re = re.compile(r"__version__\s+=\s+(.*)")
     with open("pdftools/__init__.py", "r") as f:
         content = f.read()
 
