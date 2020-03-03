@@ -41,11 +41,35 @@ def main():
         help="name of the output file, if None the destination file will be overwritten",
     )
 
+    # Copy
+    # --------------------------------------------
     parser_copy = SUBPARSERS.add_parser(
         "copy",
         help="Copy specific pages of a PDF file in a new file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+    parser_copy.add_argument(
+        "input", type=str, default=None, help="input file containing the source pages"
+    )
+    parser_copy.add_argument(
+        "-o", "--output", type=str, default=None, help="filename of the output file"
+    )
+    parser_copy.add_argument(
+        "-p",
+        "--pages",
+        dest="pages",
+        type=str,
+        nargs="+",
+        default=1,
+        help="list of pages to copy in the new file. "
+        "Examples: \n"
+        '"5 8 10": Pages 5, 8, 10; '
+        '"1-9":    Pages 1 to 9; '
+        '"5-":     Pages from 5 to last page; '
+        '"-9":     Pages from beginning to 9',
+    )
+    parser_copy.add_argument("-y", action="store_true", help="yes to all")
+
     parser_insert = SUBPARSERS.add_parser(
         "insert",
         help="Insert pages of one file into another",
@@ -87,6 +111,10 @@ def main():
         return
 
     if ARGS.command == "add":
-        from pdftools import pdf_add
+        from pdftools.pdftools import pdf_add
 
         pdf_add(ARGS.dest, ARGS.source, ARGS.pages, ARGS.output)
+    elif ARGS.command == "copy":
+        from pdftools.pdftools import pdf_copy
+
+        pdf_copy(ARGS.input, ARGS.output, ARGS.pages, ARGS.y)
