@@ -12,7 +12,7 @@ pdftools Package.
 __version__ = "1.1.4"
 
 
-from pdftools.pdftools import (  # noqa: F401
+from .pdftools import (
     pdf_merge,
     pdf_rotate,
     pdf_split,
