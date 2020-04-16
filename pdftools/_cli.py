@@ -38,7 +38,7 @@ def main():
         "--output",
         type=str,
         default=None,
-        help="name of the output file, if None the destination file will be overwritten",
+        help="Name of the output file. If None, the `dest` file will be overwritten",
     )
 
     # Copy
@@ -52,7 +52,11 @@ def main():
         "src", type=str, default=None, help="Source PDF containing pages to copy"
     )
     parser_copy.add_argument(
-        "-o", "--output", type=str, default=None, help="filename of the output file"
+        "-o",
+        "--output",
+        type=str,
+        default=None,
+        help="Name of the output file. If None, the `dest` file will be overwritten",
     )
     parser_copy.add_argument(
         "-p",
@@ -84,7 +88,7 @@ def main():
         "--output",
         type=str,
         default=None,
-        help="Output file name. If None given, `dest` will be used as output and overwritten",
+        help="Name of the output file. If None, the `dest` file will be overwritten",
     )
     parser_insert.add_argument(
         "-p",
@@ -136,7 +140,7 @@ def main():
         "--output",
         type=str,
         default=None,
-        help="Output filename. If None, the source file will be overwritten",
+        help="Name of the output file. If None, the `src` file will be overwritten",
     )
 
     # Rotate
@@ -180,7 +184,11 @@ def main():
         "src", type=str, default=None, help="Source file to be split",
     )
     parser_split.add_argument(
-        "-o", "--output", type=str, default=None, help="Output filenames",
+        "-o",
+        "--output",
+        type=str,
+        default=None,
+        help="Output filenames. If None, will append page numbers to the input file name.",
     )
     parser_split.add_argument(
         "-s",
@@ -208,7 +216,7 @@ def main():
     parser_zip.add_argument("src1", type=str, help="First source file")
     parser_zip.add_argument("src2", type=str, help="Second source file")
     parser_zip.add_argument(
-        "output", type=str, help="Output filename",
+        "output", type=str, help="Name of the output file",
     )
     # delete
     parser_zip.add_argument(
