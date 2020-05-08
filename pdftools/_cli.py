@@ -112,10 +112,10 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_merge.add_argument(
-        "output", type=str, default=None, help="Output filename",
+        "src", type=str, default=None, nargs="+", help="List of input source files"
     )
     parser_merge.add_argument(
-        "src", type=str, default=None, nargs="+", help="List of input source files"
+        "-o", "--output", type=str, default="merged.pdf", help="Output filename",
     )
     parser_merge.add_argument(
         "-d", "--delete", action="store_true", help="Delete source files after merge",
