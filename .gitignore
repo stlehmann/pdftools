@@ -58,6 +58,9 @@ docs/_build/
 #IPython Notebooks
 .ipynb_checkpoints
 
+# Mypy
+.mypy_cache/
+
 #Additional files
 samples
 *.sublime-workspace
