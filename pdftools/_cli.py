@@ -6,6 +6,7 @@ from . import __version__
 
 def main():
     PARSER = argparse.ArgumentParser(
+        description="Python-based command line tool for manipulating PDFs. It is based on the PyPdf2 package.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     # global options
@@ -22,6 +23,7 @@ def main():
     parser_add = SUBPARSERS.add_parser(
         "add",
         help="Add pages from a source file to an output PDF file",
+        description="Add pages from a source file to an output PDF file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_add.add_argument("dest", type=str, help="Destination PDF file")
@@ -46,6 +48,7 @@ def main():
     parser_copy = SUBPARSERS.add_parser(
         "copy",
         help="Copy specific pages of a PDF file in a new file",
+        description="Copy specific pages of a PDF file in a new file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_copy.add_argument(
@@ -79,6 +82,7 @@ def main():
     parser_insert = SUBPARSERS.add_parser(
         "insert",
         help="Insert pages of one file into another",
+        description="Insert pages of one file into another",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_insert.add_argument("dest", type=str, help="Destination PDF file")
@@ -109,6 +113,7 @@ def main():
     parser_merge = SUBPARSERS.add_parser(
         "merge",
         help="Merge the pages of multiple input files into one output file",
+        description="Merge the pages of multiple input files into one output file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_merge.add_argument(
@@ -126,6 +131,7 @@ def main():
     parser_remove = SUBPARSERS.add_parser(
         "remove",
         help="Remove pages from a PDF file",
+        description="Remove pages from a PDF file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_remove.add_argument("src", type=str, default=None, help="PDF source file")
@@ -148,6 +154,7 @@ def main():
     parser_rotate = SUBPARSERS.add_parser(
         "rotate",
         help="Rotate the pages of a PDF files by 90 degrees",
+        description="Rotate the pages of a PDF files by 90 degrees",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_rotate.add_argument("src", type=str, default=None, help="Source file")
@@ -178,6 +185,7 @@ def main():
     parser_split = SUBPARSERS.add_parser(
         "split",
         help="Split a PDF file into multiple documents",
+        description="Split a PDF file into multiple documents",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_split.add_argument(
@@ -211,6 +219,7 @@ def main():
     parser_zip = SUBPARSERS.add_parser(
         "zip",
         help="Python-like zipping (interleaving) the pages of two documents in one output file",
+        description="Python-like zipping (interleaving) the pages of two documents in one output file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_zip.add_argument("src1", type=str, help="First source file")
