@@ -51,6 +51,7 @@ setup(
     author_email="stlm@posteo.de",
     description="A collection of convenience scripts for PDF manipulation, based on the PyPdf2 package",
     long_description=read("README.md"),
+    long_description_content_type='text/markdown',
     install_requires=["PyPdf2"],
     maintainer="Stefan Lehmann",
     classifiers=[
