@@ -6,6 +6,7 @@ pdftools
 * **Description:** Python-based command line tool for manipulating PDFs. It is based on the PyPdf2 package.
 
 [![Build Status](https://travis-ci.org/stlehmann/pdftools.svg?branch=master)](https://travis-ci.org/stlehmann/pdftools)
+[![PyPI version](https://badge.fury.io/py/pdftools.svg)](https://badge.fury.io/py/pdftools)
 [![Downloads](https://pepy.tech/badge/pdftools)](https://pepy.tech/project/pdftools)
 [![Downloads](https://pepy.tech/badge/pdftools/week)](https://pepy.tech/project/pdftools/week)
 
