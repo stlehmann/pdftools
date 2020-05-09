@@ -11,8 +11,21 @@ Setupfile for pdftools.
 
 """
 import ast
+import io
 import re
+import os
 from setuptools import setup, find_packages
+
+
+def read(*names, **kwargs):
+    try:
+        with io.open(
+            os.path.join(os.path.dirname(__file__), *names),
+            encoding=kwargs.get("encoding", "utf8")
+        ) as fp:
+            return fp.read()
+    except IOError:
+        return ''
 
 
 def extract_version():
@@ -37,6 +50,7 @@ setup(
     author="Stefan Lehmann",
     author_email="stlm@posteo.de",
     description="A collection of convenience scripts for PDF manipulation, based on the PyPdf2 package",
+    long_description=read("README.md"),
     install_requires=["PyPdf2"],
     maintainer="Stefan Lehmann",
     classifiers=[
