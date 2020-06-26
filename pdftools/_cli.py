@@ -279,7 +279,7 @@ def main():
     elif ARGS.command == "rotate":
         from pdftools.pdftools import pdf_rotate
 
-        pdf_rotate(ARGS.src, ARGS.counter_clockwise, ARGS.pages, ARGS.output)
+        pdf_rotate(ARGS.src, ARGS.degrees, ARGS.counter_clockwise, ARGS.pages, ARGS.output)
     elif ARGS.command == "split":
         from pdftools.pdftools import pdf_split
 
