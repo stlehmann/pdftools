@@ -139,15 +139,19 @@ optional arguments:
 ### Rotate
 
 ```
-usage: pdftools rotate [-h] [-c] [-p PAGES [PAGES ...]] [-o OUTPUT] src
+usage: pdftools rotate [-h] [-d {90,180,270}] [-c] [-p PAGES [PAGES ...]]
+                       [-o OUTPUT]
+                       src
 
-Rotate the pages of a PDF files by 90 degrees
+Rotate the pages of a PDF file by a set number of degrees
 
 positional arguments:
   src                   Source file
 
 optional arguments:
   -h, --help            show this help message and exit
+  -d {90,180,270}, --degrees {90,180,270}
+                        Specify degrees value to rotate page(s) (default: 90)
   -c, --counter-clockwise
                         Rotate pages counter-clockwise instead of clockwise,
                         by default (default: False)
