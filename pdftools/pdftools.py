@@ -53,6 +53,7 @@ def pdf_merge(inputs: [str], output: str, delete: bool = False):
 
 def pdf_rotate(
     input: str,
+    degrees: int,
     counter_clockwise: bool = False,
     pages: [str] = None,
     output: str = None,
@@ -60,6 +61,7 @@ def pdf_rotate(
     """
     Rotate the given Pdf files clockwise or counter clockwise.
     :param inputs: pdf files
+    :param degrees: number of degrees to rotate the page(s)
     :param counter_clockwise: rotate counter clockwise if true else clockwise
     :param pages: list of page numbers to rotate, if None all pages will be
         rotated
@@ -76,9 +78,9 @@ def pdf_rotate(
     for i, page in enumerate(reader.pages):
         if pages is None or i in pages:
             if counter_clockwise:
-                writer.addPage(page.rotateCounterClockwise(90))
+                writer.addPage(page.rotateCounterClockwise(degrees))
             else:
-                writer.addPage(page.rotateClockwise(90))
+                writer.addPage(page.rotateClockwise(degrees))
         else:
             writer.addPage(page)
 
