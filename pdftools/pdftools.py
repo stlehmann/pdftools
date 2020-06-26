@@ -69,14 +69,11 @@ def pdf_rotate(
     writer = PdfFileWriter()
 
     # get pages from source depending on pages parameter
-    if pages is None:
-        source_pages = reader.pages
-    else:
+    if pages:
         pages = parse_rangearg(pages, len(reader.pages))
-        source_pages = [reader.getPage(i) for i in pages]
 
     # rotate pages and add to writer
-    for i, page in enumerate(source_pages):
+    for i, page in enumerate(reader.pages):
         if pages is None or i in pages:
             if counter_clockwise:
                 writer.addPage(page.rotateCounterClockwise(90))
