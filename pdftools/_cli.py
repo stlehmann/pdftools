@@ -153,11 +153,19 @@ def main():
     # --------------------------------------------
     parser_rotate = SUBPARSERS.add_parser(
         "rotate",
-        help="Rotate the pages of a PDF files by 90 degrees",
-        description="Rotate the pages of a PDF files by 90 degrees",
+        help="Rotate the pages of a PDF file by a set number of degrees",
+        description="Rotate the pages of a PDF file by a set number of degrees",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser_rotate.add_argument("src", type=str, default=None, help="Source file")
+    parser_rotate.add_argument(
+        "-d",
+        "--degrees",
+        choices=(90, 180, 270),
+        default=90,
+        type=int,
+        help="Specify degrees value to rotate page(s)"
+    )
     parser_rotate.add_argument(
         "-c",
         "--counter-clockwise",
