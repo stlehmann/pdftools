@@ -9,7 +9,7 @@ pdftools Package.
 :last modified time: 2018-10-28 16:57:24
 
 """
-__version__ = "2.0.1"
+__version__ = "2.0.2"
 
 
 from .pdftools import (
