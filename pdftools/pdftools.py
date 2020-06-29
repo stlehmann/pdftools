@@ -53,7 +53,7 @@ def pdf_merge(inputs: [str], output: str, delete: bool = False):
 
 def pdf_rotate(
     input: str,
-    degrees: int,
+    degrees: int = 90,
     counter_clockwise: bool = False,
     pages: [str] = None,
     output: str = None,
