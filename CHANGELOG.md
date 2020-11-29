@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2.0.3 [unreleased]
+
+### Added
+
+### Fixed
+* [#13](https://github.com/stlehmann/pdftools/pull/13) fix args for pdftools.copy
+
+### Removed
+
 ## 2.0.2
 
 ### Added
