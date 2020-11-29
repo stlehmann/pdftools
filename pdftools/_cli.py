@@ -263,7 +263,7 @@ def main():
     elif ARGS.command == "copy":
         from pdftools.pdftools import pdf_copy
 
-        pdf_copy(ARGS.input, ARGS.output, ARGS.pages, ARGS.y)
+        pdf_copy(ARGS.src, ARGS.output, ARGS.pages, ARGS.y)
     elif ARGS.command == "insert":
         from pdftools.pdftools import pdf_insert
 
