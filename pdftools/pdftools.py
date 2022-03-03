@@ -311,7 +311,7 @@ def pdf_insert(
     srcfile.close()
 
 
-def pdf_remove(source: str, pages: [str], output: str = None):
+def pdf_remove(source: str, pages: [str], output: str = None, yes_to_all=False):
     """
     Remove pages from a PDF source file.
     :param source: pdf source file
@@ -346,7 +346,7 @@ def pdf_remove(source: str, pages: [str], output: str = None):
 
     # Move temporary file to source
     if output is None:
-        if overwrite_dlg(source):
+        if yes_to_all or overwrite_dlg(source):
             os.remove(source)
             move(outfile.name, source)
         else:
