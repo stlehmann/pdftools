@@ -1,7 +1,7 @@
 import os
 from tempfile import NamedTemporaryFile
 from shutil import move
-from PyPDF2 import PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 from pdftools.parseutil import parse_rangearg, limit
 
 

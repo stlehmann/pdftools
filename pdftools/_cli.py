@@ -6,7 +6,7 @@ from . import __version__
 
 def main():
     PARSER = argparse.ArgumentParser(
-        description="Python-based command line tool for manipulating PDFs. It is based on the PyPdf2 package.",
+        description="Python-based command line tool for manipulating PDFs. It is based on the pypdf package.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     # global options
