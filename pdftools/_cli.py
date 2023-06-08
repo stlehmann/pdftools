@@ -148,6 +148,10 @@ def main():
         default=None,
         help="Name of the output file. If None, the `src` file will be overwritten",
     )
+    parser_remove.add_argument(
+        "-f", "--force",
+        action="store_true",
+        help='Caution!! Answers "Yes" to all overwrite queries.')
 
     # Rotate
     # --------------------------------------------
@@ -275,7 +279,7 @@ def main():
     elif ARGS.command == "remove":
         from pdftools.pdftools import pdf_remove
 
-        pdf_remove(ARGS.src, ARGS.pages, ARGS.output)
+        pdf_remove(ARGS.src, ARGS.pages, ARGS.output, ARGS.force)
     elif ARGS.command == "rotate":
         from pdftools.pdftools import pdf_rotate
 

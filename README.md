@@ -10,6 +10,12 @@ pdftools
 [![Downloads](https://pepy.tech/badge/pdftools)](https://pepy.tech/project/pdftools)
 [![Downloads](https://pepy.tech/badge/pdftools/week)](https://pepy.tech/project/pdftools/week)
 
+## local install
+
+`pip install .`
+
+do not use `setup.py install`
+
 ## Features
 
 * add, insert, remove and rotate pages
