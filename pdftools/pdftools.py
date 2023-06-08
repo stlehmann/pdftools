@@ -1,7 +1,7 @@
 import os
 from tempfile import NamedTemporaryFile
 from shutil import move
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from pypdf import PdfReader, PdfWriter
 from pdftools.parseutil import parse_rangearg, limit
 
 
@@ -21,7 +21,7 @@ def pdf_merge(inputs: [str], output: str, delete: bool = False):
     :param delete: delete input files after completion if true
 
     """
-    writer = PdfFileWriter()
+    writer = PdfWriter()
     if os.path.isfile(output):
         ans = input(
             "The file '%s' already exists. "
@@ -35,9 +35,9 @@ def pdf_merge(inputs: [str], output: str, delete: bool = False):
         infiles = []
         for filename in inputs:
             f = open(filename, "rb")
-            reader = PdfFileReader(f)
+            reader = PdfReader(f)
             for page in reader.pages:
-                writer.addPage(page)
+                writer.add_page(page)
             infiles.append(f)
         writer.write(outputfile)
     except FileNotFoundError as e:
@@ -67,8 +67,8 @@ def pdf_rotate(
         rotated
     """
     infile = open(input, "rb")
-    reader = PdfFileReader(infile)
-    writer = PdfFileWriter()
+    reader = PdfReader(infile)
+    writer = PdfWriter()
 
     # get pages from source depending on pages parameter
     if pages:
@@ -78,11 +78,11 @@ def pdf_rotate(
     for i, page in enumerate(reader.pages):
         if pages is None or i in pages:
             if counter_clockwise:
-                writer.addPage(page.rotateCounterClockwise(degrees))
+                writer.add_page(page.rotateCounterClockwise(degrees))
             else:
-                writer.addPage(page.rotateClockwise(degrees))
+                writer.add_page(page.rotateClockwise(degrees))
         else:
-            writer.addPage(page)
+            writer.add_page(page)
 
     # Open output file or temporary file for writing
     if output is None:
@@ -123,16 +123,16 @@ def pdf_copy(input: str, output: str, pages: [int], yes_to_all=False):
         return
 
     with open(input, "rb") as inputfile:
-        reader = PdfFileReader(inputfile)
+        reader = PdfReader(inputfile)
         outputfile = open(output, "wb")
-        writer = PdfFileWriter()
+        writer = PdfWriter()
         if pages is None:
             pages = range(len(reader.pages))
         else:
             pages = parse_rangearg(pages, len(reader.pages))
         for pagenr in sorted(pages):
             page = reader.getPage(pagenr)
-            writer.addPage(page)
+            writer.add_page(page)
             writer.write(outputfile)
         outputfile.close()
 
@@ -154,7 +154,7 @@ def pdf_split(
         return
 
     with open(input, "rb") as inputfile:
-        reader = PdfFileReader(inputfile)
+        reader = PdfReader(inputfile)
         pagenr = 0
         outputfile = None
         if sequence is None:
@@ -162,8 +162,8 @@ def pdf_split(
                 if not i % stepsize:
                     pagenr += 1
                     outputfile = open(output + "_%i.pdf" % pagenr, "wb")
-                    writer = PdfFileWriter()
-                writer.addPage(page)
+                    writer = PdfWriter()
+                writer.add_page(page)
                 if not (i + 1) % stepsize:
                     writer.write(outputfile)
                     outputfile.close()
@@ -174,11 +174,11 @@ def pdf_split(
                 with open(
                     output + "_%i.pdf" % (filenr + 1), "wb"
                 ) as outputfile:
-                    writer = PdfFileWriter()
+                    writer = PdfWriter()
                     for i in range(pagecount):
                         try:
                             page = next(iter_pages)
-                            writer.addPage(page)
+                            writer.add_page(page)
                         except StopIteration:
                             writer.write(outputfile)
                             return
@@ -217,18 +217,18 @@ def pdf_zip(
     outputfile = open(output, "wb")
     try:
         f1, f2 = open(input1, "rb"), open(input2, "rb")
-        r1, r2 = PdfFileReader(f1), PdfFileReader(f2)
-        writer = PdfFileWriter()
+        r1, r2 = PdfReader(f1), PdfReader(f2)
+        writer = PdfWriter()
         pages1 = [page for page in r1.pages]
         pages2 = [page for page in r2.pages]
         if not revert:
             for p1, p2 in zip(pages1, pages2):
-                writer.addPage(p1)
-                writer.addPage(p2)
+                writer.add_page(p1)
+                writer.add_page(p2)
         else:
             for p1, p2 in zip(pages1, reversed(pages2)):
-                writer.addPage(p1)
-                writer.addPage(p2)
+                writer.add_page(p1)
+                writer.add_page(p2)
         writer.write(outputfile)
         f1.close()
         f2.close()
@@ -266,23 +266,23 @@ def pdf_insert(
         if ans not in ["y", ""]:
             return
 
-    writer = PdfFileWriter()
+    writer = PdfWriter()
     # read pages from file1
     destfile = open(dest, "rb")
-    destreader = PdfFileReader(destfile)
+    destreader = PdfReader(destfile)
     for page in destreader.pages:
-        writer.addPage(page)
+        writer.add_page(page)
 
     # read pages from file2
     srcfile = open(source, "rb")
-    srcreader = PdfFileReader(srcfile)
+    srcreader = PdfReader(srcfile)
 
     # if no page numbers are given insert all pages
     index = limit(index - 1, 0, len(destreader.pages))
     if pages is None:
         for i, page in enumerate(srcreader.pages):
             if index is None:
-                writer.addPage(page)
+                writer.add_page(page)
             else:
                 writer.insertPage(page, index + i)
     else:
@@ -290,7 +290,7 @@ def pdf_insert(
         for i, pagenr in enumerate(pages):
             page = srcreader.getPage(pagenr)
             if index is None:
-                writer.addPage(page)
+                writer.add_page(page)
             else:
                 writer.insertPage(page, index + i)
 
@@ -323,15 +323,15 @@ def pdf_remove(source: str, pages: [str], output: str = None):
         if overwrite_dlg(output) is False:
             return
 
-    writer = PdfFileWriter()
+    writer = PdfWriter()
     srcfile = open(source, "rb")
-    srcreader = PdfFileReader(srcfile)
+    srcreader = PdfReader(srcfile)
 
     # Add pages, leave out removed pages
     pages = parse_rangearg(pages, len(srcreader.pages))
     for pagenr, page in enumerate(srcreader.pages):
         if pagenr not in pages:
-            writer.addPage(page)
+            writer.add_page(page)
 
     # Open output file or temporary file for writing
     if output is None:
@@ -367,27 +367,27 @@ def pdf_add(dest: str, source: str, pages: [str], output: str):
         if not overwrite_dlg(output):
             return
 
-    writer = PdfFileWriter()
+    writer = PdfWriter()
 
     # read pages from destination file
     destfile = open(dest, "rb")
-    destreader = PdfFileReader(destfile)
+    destreader = PdfReader(destfile)
     for page in destreader.pages:
-        writer.addPage(page)
+        writer.add_page(page)
 
     # read pages from source file
     srcfile = open(source, "rb")
-    srcreader = PdfFileReader(srcfile)
+    srcreader = PdfReader(srcfile)
 
     # if no page numbers are given add all pages from source
     if pages is None:
         for i, page in enumerate(srcreader.pages):
-            writer.addPage(page)
+            writer.add_page(page)
     else:
         pages = parse_rangearg(pages, len(srcreader.pages))
         for pagenr in pages:
             page = srcreader.getPage(pagenr)
-            writer.addPage(page)
+            writer.add_page(page)
 
     if output is None:
         # Write into Temporary File first and then overwrite dest file

@@ -49,10 +49,10 @@ setup(
     license="MIT",
     author="Stefan Lehmann",
     author_email="stlm@posteo.de",
-    description="A collection of convenience scripts for PDF manipulation, based on the PyPdf2 package",
+    description="A collection of convenience scripts for PDF manipulation, based on the pypdf package",
     long_description=read("README.md"),
     long_description_content_type='text/markdown',
-    install_requires=["PyPdf2"],
+    install_requires=["pypdf"],
     maintainer="Stefan Lehmann",
     classifiers=[
         "Development Status :: 5 - Production/Stable",

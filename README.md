@@ -3,7 +3,7 @@ pdftools
 
 * **Copyright (c)** 2015 Stefan Lehmann
 * **License:** MIT
-* **Description:** Python-based command line tool for manipulating PDFs. It is based on the PyPdf2 package.
+* **Description:** Python-based command line tool for manipulating PDFs. It is based on the pypdf package.
 
 [![Build Status](https://travis-ci.org/stlehmann/pdftools.svg?branch=master)](https://travis-ci.org/stlehmann/pdftools)
 [![PyPI version](https://badge.fury.io/py/pdftools.svg)](https://badge.fury.io/py/pdftools)
@@ -28,7 +28,7 @@ The description for each script is listed below.
 usage: pdftools [-h] [-V] <command> ...
 
 Python-based command line tool for manipulating PDFs. It is based on the
-PyPdf2 package.
+pypdf package.
 
 optional arguments:
   -h, --help     show this help message and exit
