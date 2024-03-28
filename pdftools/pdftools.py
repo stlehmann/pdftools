@@ -131,7 +131,7 @@ def pdf_copy(input: str, output: str, pages: [int], yes_to_all=False):
         else:
             pages = parse_rangearg(pages, len(reader.pages))
         for pagenr in sorted(pages):
-            page = reader.getPage(pagenr)
+            page = reader._get_page(pagenr)
             writer.add_page(page)
             writer.write(outputfile)
         outputfile.close()
@@ -288,7 +288,7 @@ def pdf_insert(
     else:
         pages = parse_rangearg(pages, len(srcreader.pages))
         for i, pagenr in enumerate(pages):
-            page = srcreader.getPage(pagenr)
+            page = srcreader._get_page(pagenr)
             if index is None:
                 writer.add_page(page)
             else:
@@ -386,7 +386,7 @@ def pdf_add(dest: str, source: str, pages: [str], output: str):
     else:
         pages = parse_rangearg(pages, len(srcreader.pages))
         for pagenr in pages:
-            page = srcreader.getPage(pagenr)
+            page = srcreader._get_page(pagenr)
             writer.add_page(page)
 
     if output is None:
