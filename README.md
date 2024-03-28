@@ -10,6 +10,12 @@ pdftools
 [![Downloads](https://pepy.tech/badge/pdftools)](https://pepy.tech/project/pdftools)
 [![Downloads](https://pepy.tech/badge/pdftools/week)](https://pepy.tech/project/pdftools/week)
 
+## Installation notes
+
+Ideally, you should be able to clone this repo and run `pip install -e .` to install the package locally.
+
+On OSX, I had to go into `~/Library/Python/<python-version>/lib/python/site-packages/easy-install.pth` and add the local repo directory.
+
 ## Features
 
 * add, insert, remove and rotate pages
